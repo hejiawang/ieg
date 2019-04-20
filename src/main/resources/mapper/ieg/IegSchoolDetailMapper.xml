@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.ieg.mapper.IegSchoolDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.ieg.model.entity.IegSchoolDetail">
+        <id column="id" property="id" />
+        <result column="school_id" property="schoolId" />
+        <result column="describe" property="describe" />
+        <result column="faculty" property="faculty" />
+        <result column="life" property="life" />
+        <result column="scholarship" property="scholarship" />
+        <result column="img1_path" property="img1Path" />
+        <result column="img2_path" property="img2Path" />
+        <result column="img3_path" property="img3Path" />
+        <result column="img4_path" property="img4Path" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <delete id="deleteBySchool">
+        DELETE FROM ieg_school_detail WHERE school_id = #{schoolId}
+    </delete>
+
+</mapper>

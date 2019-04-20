@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.sys.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.sys.model.entity.SysUser">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="phone" property="phone" />
+        <result column="real_name" property="realName" />
+        <result column="birthday" property="birthday" />
+        <result column="sex" property="sex" />
+        <result column="photo" property="photo" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <!-- Dto查询映射结果 -->
+    <resultMap id="DtoResultMap" type="com.wang.jmonkey.modules.sys.model.dto.SysUserDto" extends="BaseResultMap">
+        <collection property="deptIds" ofType="java.lang.String">
+            <result column="dept_id" />
+        </collection>
+        <collection property="roleIds" ofType="java.lang.String">
+            <result column="role_id"/>
+        </collection>
+        <collection property="depts" ofType="com.wang.jmonkey.modules.sys.model.entity.SysDept">
+            <id column="deptId" property="id" />
+            <result column="deptName" property="name" />
+            <result column="deptCode" property="code" />
+        </collection>
+        <collection property="roles" ofType="com.wang.jmonkey.modules.sys.model.entity.SysRole">
+            <id column="roleId" property="id" />
+            <result column="roleCode" property="code" />
+            <result column="roleName" property="name" />
+        </collection>
+    </resultMap>
+
+    <resultMap id="VoResultMap" type="com.wang.jmonkey.common.model.vo.UserVo">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="delete_flag" property="deleteFlag" />
+        <collection property="roleList" ofType="com.wang.jmonkey.common.model.vo.RoleVo">
+            <id column="roleId" property="id" />
+            <result column="role_name" property="name" />
+            <result column="role_code" property="code" />
+        </collection>
+    </resultMap>
+
+    <select id="selectDtoById" resultMap="DtoResultMap">
+        SELECT
+            u.*,
+            ud.dept_id as dept_id, d.id as deptId, d.name as deptName, d.code as deptCode,
+            ur.role_id as role_id, r.id as roleId, r.code as roleCode, r.name as roleName
+        FROM sys_user u
+        LEFT JOIN sys_user_dept ud ON u.id = ud.user_id and ud.delete_flag = 'Used'
+        LEFT JOIN sys_dept d on ud.dept_id = d.id AND d.delete_flag = 'Used'
+        LEFT JOIN sys_user_role ur ON u.id = ur.user_id AND ur.delete_flag = 'Used'
+        LEFT JOIN sys_role r ON ur.role_id = r.id AND r.delete_flag = 'Used'
+        WHERE u.delete_flag = 'Used'
+        and u.id = #{id}
+    </select>
+
+    <select id="selectDtoPage" resultMap="DtoResultMap">
+        SELECT
+            u.*,
+            ud.dept_id as dept_id, d.id as deptId, d.name as deptName, d.code as deptCode,
+            ur.role_id as role_id, r.id as roleId, r.code as roleCode, r.name as roleName
+        FROM sys_user u
+        LEFT JOIN sys_user_dept ud ON u.id = ud.user_id and ud.delete_flag = 'Used'
+        LEFT JOIN sys_dept d on ud.dept_id = d.id AND d.delete_flag = 'Used'
+        LEFT JOIN sys_user_role ur ON u.id = ur.user_id AND ur.delete_flag = 'Used'
+        LEFT JOIN sys_role r ON ur.role_id = r.id AND r.delete_flag = 'Used'
+        WHERE u.delete_flag = 'Used'
+        <if test=" username != '' and username != null"> AND u.username like '%${username}%' </if>
+        <if test=" realName != '' and realName != null"> AND u.real_name like '%${realName}%' </if>
+        <if test=" phone != '' and phone != null"> AND u.phone like '%${phone}%' </if>
+        <if test=" sex != '' and sex != null"> AND u.sex = #{sex} </if>
+        <if test=" roleId != '' and roleId != null"> AND ur.role_id = #{roleId} </if>
+        <if test=" deptId != '' and deptId != null"> AND ud.dept_id = #{deptId} </if>
+        order by u.create_date
+    </select>
+
+    <select id="checkUsername" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM sys_user
+        WHERE delete_flag = 'Used'
+        AND username = #{username}
+        <if test=" id != '' and id != null">
+            AND id != #{id}
+        </if>
+    </select>
+
+    <select id="loadUserByUsername" resultMap="VoResultMap">
+        SELECT u.*, r.id as roleId, r.name as role_name, r.code as role_code
+        FROM sys_user u
+        LEFT JOIN sys_user_role ur ON ur.user_id = u.id AND ur.delete_flag = 'Used'
+        LEFT JOIN sys_role r ON ur.role_id = r.id AND r.delete_flag = 'Used'
+        WHERE u.delete_flag = 'Used' AND u.username = #{username}
+    </select>
+</mapper>

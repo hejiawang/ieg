@@ -1,0 +1,36 @@
+jmonkey:
+  log:
+    save: false #是否存储日志
+    debug: false #是否打印访问接口日志
+  redis:
+    host: localhost
+    port: 6379
+    database: 10
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://49.4.54.245:3306/ieg?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&nullCatalogMeansCurrent=true
+  static-locations-path: http://localhost:8080/assets/
+  static-locations-file: D:/JMonkeyFile
+  filePath: /assets
+  fileTempMemory: D:/fileTempMemory
+  thymeleaf:
+    staticPath: http://localhost:8080/lib/ #https://cdn.bootcss.com/
+  user:
+    photo: ${jmonkey.filePath}/user/photo/
+  ieg:
+    school:
+      img:
+        logo: ${jmonkey.filePath}/ieg/school/logo/
+        describe: ${jmonkey.filePath}/ieg/school/describe/
+        faculty: ${jmonkey.filePath}/ieg/school/faculty/
+        life: ${jmonkey.filePath}/ieg/school/life/
+        scholarship: ${jmonkey.filePath}/ieg/school/scholarship/
+      faculty: ${jmonkey.filePath}/ieg/faculty/
+      problem: ${jmonkey.filePath}/ieg/school/problem/
+      enroll: ${jmonkey.filePath}/ieg/school/enroll/
+      major: ${jmonkey.filePath}/ieg/school/major/
+      major-problem: ${jmonkey.filePath}/ieg/school/major/problem/
+      environment: ${jmonkey.filePath}/ieg/environment/
+    enroll: ${jmonkey.filePath}/ieg/enroll/
+    grade: ${jmonkey.filePath}/ieg/school/grade/

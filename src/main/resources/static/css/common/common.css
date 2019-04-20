@@ -1,0 +1,22 @@
+html,body{
+    margin:0;
+    height:100%;
+}
+
+.app-layout {
+    height: 100%;
+}
+
+/* iview 表单中的lable文字大小 */
+.ivu-form .ivu-form-item-label{
+    font-size: 17px;
+}
+
+/* 列表文字大小 */
+.ivu-table-large {
+    font-size: 17px;
+}
+/* 列表头颜色 */
+.ivu-table th{
+    background-color: #5cadff;
+}

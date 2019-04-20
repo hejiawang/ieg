@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.sys.mapper.SysRoleDataMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.sys.model.entity.SysRoleData">
+        <id column="role_id" property="roleId" />
+        <result column="rule_id" property="ruleId" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <delete id="deleteByScopeId">
+        DELETE FROM sys_role_data WHERE rule_id in (
+            select id FROM sys_data_scope_rule WHERE scope_id = #{scopeId}
+        )
+    </delete>
+
+    <delete id="deleteByRoleId">
+        delete from sys_role_data where role_id = #{roleId}
+    </delete>
+
+    <select id="findByRole" resultType="com.wang.jmonkey.modules.sys.model.dto.SysRoleDataConverDto">
+        select sr.scope_id as scopeId, sr.id as ruleId
+        FROM sys_role_data rd
+        LEFT JOIN sys_data_scope_rule sr ON rd.rule_id = sr.id AND sr.delete_flag = 'Used'
+        WHERE rd.delete_flag = 'Used' AND rd.role_id = #{roleId}
+    </select>
+
+    <select id="selectByRole" resultType="com.wang.jmonkey.modules.sys.model.dto.SysRoleDataRuleDto">
+        select sr.sql_segment as sqlSegment, s.url as url
+        FROM sys_role_data rd
+        LEFT JOIN sys_role r on r.id = rd.role_id AND r.delete_flag = 'Used'
+        LEFT JOIN sys_data_scope_rule sr ON rd.rule_id = sr.id AND sr.delete_flag = 'Used'
+        LEFT JOIN sys_data_scope s on s.id = sr.scope_id AND s.delete_flag = 'Used'
+        WHERE rd.delete_flag = 'Used' AND r.code = #{roleCode}
+    </select>
+
+</mapper>

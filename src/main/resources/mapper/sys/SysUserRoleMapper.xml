@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.sys.mapper.SysUserRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.sys.model.entity.SysUserRole">
+        <id column="user_id" property="userId" />
+        <result column="role_id" property="roleId" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <resultMap id="RoleResultMap" type="com.wang.jmonkey.modules.sys.model.entity.SysRole">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="code" property="code" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <delete id="deleteByRoleId">
+        delete from sys_user_role where role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteByUserId">
+        delete from sys_user_role where user_id = #{userId}
+    </delete>
+
+    <select id="selectRoleByUserId" resultMap="RoleResultMap">
+        select r.*
+        FROM sys_user_role ur
+        LEFT JOIN sys_role r ON r.id = ur.role_id AND r.delete_flag = 'Used'
+        WHERE ur.user_id = #{userId} AND ur.delete_flag = 'Used'
+    </select>
+
+</mapper>

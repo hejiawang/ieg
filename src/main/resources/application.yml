@@ -1,0 +1,114 @@
+spring:
+  application:
+    name: JMonkey2.0
+  profiles:
+    active: dev
+  jackson:
+    time-zone: GMT+8
+  cache:
+    type: redis
+    redis:
+      time-to-live: 86400000 #缓存超时时间ms 1天
+      cache-null-values: false #是否缓存空值
+  redis:
+    host: ${jmonkey.redis.host}
+    port: ${jmonkey.redis.port}
+    database: ${jmonkey.redis.database}
+    timeout: 10000  #redis 连接超时时间ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+  activiti:
+    check-process-definitions: true
+    process-definition-location-prefix: classpath:processes/
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: ${jmonkey.datasource.url}
+    username: ${jmonkey.datasource.username}
+    password: ${jmonkey.datasource.password}
+    hikari:
+      minimum-idle: 5 #最小空闲连接数量
+      idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
+      maximum-pool-size: 10 #连接池最大连接数，默认是10
+      auto-commit: true #此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      pool-name: JMonkeyHikariCP #连接池母子
+      max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      connection-timeout: 30000  #数据库连接超时时间,默认30秒，即30000
+      connection-test-query: SELECT 1
+  thymeleaf:
+    cache: true
+  devtools:
+    restart:
+      enabled: true
+      exclude: templates/**,static/**,
+  resources:
+    static-locations: file:${jmonkey.static-locations-file},classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+
+server:
+  servlet:
+    context-path: /
+    session:
+      tracking-modes: cookie
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:mapper/*/*.xml
+  typeAliasesPackage: com.wang.jmonkey.modules.*.model.entity #实体扫描，多个package用逗号或者分号分隔
+  global-config:
+    id-type: 3 #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    field-strategy: 1 #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    db-column-underline: true #驼峰下划线转换
+    refresh-mapper: true #刷新mapper 调试神器
+    #capital-mode: true #数据库大写下划线转换
+    #key-generator: com.baomidou.springboot.xxx #序列接口实现类配置
+    logic-delete-value: concat('','Delete','')  #逻辑删除配置
+    logic-not-delete-value: concat('','Used','')
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector #自定义SQL注入器
+    metaObjectHandler: com.wang.jmonkey.common.mybatis.handler.DataMetaObjectHandler
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+
+logging:
+  config: classpath:logback.xml
+  level:
+    com:
+      wang: debug
+
+jmonkey:
+  baseUrl:
+  auth:
+    clientId: JMonkey_client_id
+    clientSecret: JMonkey_client_secret
+    scope: server
+  token:
+    expiresIn: 3600 # token过期时间，默认10小时，单位秒，60 * 60（一小时）
+  urls:
+    anon:
+    - /auth/**
+    - /oauth/**
+    - /signin
+    - /signup
+    - /sys/user/loginErrorNum
+    - /socket/**
+    - /assets/**
+    - /favicon.ico
+    - /page/**
+    - /poserver.zz
+    - /posetup.exe
+    - /pageoffice.js
+    - /jquery.min.js
+    - /pobstyle.css
+    - /sealsetup.exe
+    resources:
+    - /css/**
+    - /images/**
+    - /lib/**
+    - /scripts/**
+    - /file/**
+    - /assets/**

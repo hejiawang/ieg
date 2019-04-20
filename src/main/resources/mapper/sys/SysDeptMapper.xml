@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.sys.mapper.SysDeptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.sys.model.entity.SysDept">
+        <id column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="name" property="name" />
+        <result column="code" property="code" />
+        <result column="sort" property="sort" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <resultMap id="TreeResultMap" type="com.wang.jmonkey.modules.sys.model.dto.SysDeptTreeDto" extends="BaseResultMap"></resultMap>
+
+    <resultMap id="DeptUserResultMap" type="com.wang.jmonkey.modules.sys.model.dto.SysDeptUserDto" extends="BaseResultMap">
+        <collection property="userList" ofType="com.wang.jmonkey.modules.sys.model.entity.SysUser">
+            <id column="user_id" property="id" />
+            <result column="user_real_name" property="realName" />
+            <result column="user_photo" property="photo" />
+        </collection>
+    </resultMap>
+
+    <select id="tree" resultMap="TreeResultMap">
+        SELECT *
+        FROM sys_dept
+        WHERE delete_flag = 'Used'
+        ORDER BY sort
+    </select>
+
+    <select id="checkCode" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM sys_dept
+        WHERE delete_flag = 'Used'
+        AND code = #{code}
+        <if test=" id != '' and id != null">
+            AND id != #{id}
+        </if>
+    </select>
+
+    <select id="deptUserList" resultMap="DeptUserResultMap">
+        select d.*, u.id as user_id, u.real_name as user_real_name, u.photo as user_photo
+        FROM sys_dept d
+        LEFT JOIN sys_user_dept ud ON d.id = ud.dept_id AND ud.delete_flag = 'Used'
+        LEFT JOIN sys_user u ON ud.user_id = u.id AND u.delete_flag = 'Used'
+        WHERE d.delete_flag = 'Used'
+        order by d.sort
+    </select>
+</mapper>

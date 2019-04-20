@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.ieg.mapper.IegSchoolMajorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.ieg.model.entity.IegSchoolMajor">
+        <id column="id" property="id" />
+        <result column="major_two_id" property="majorTwoId" />
+        <result column="school_id" property="schoolId" />
+        <result column="faculty_id" property="facultyId" />
+        <result column="submit_id" property="submitId" />
+        <result column="name" property="name" />
+        <result column="code" property="code" />
+        <result column="degree_type" property="degreeType" />
+        <result column="course_type" property="courseType" />
+        <result column="sort" property="sort" />
+        <result column="describe" property="describe" />
+        <result column="work_direction" property="workDirection" />
+        <result column="course" property="course" />
+        <result column="student_scope" property="studentScope" />
+        <result column="money" property="money" />
+        <result column="study_length" property="studyLength" />
+        <result column="ratio_sex_man" property="ratioSexMan" />
+        <result column="ratio_sex_woman" property="ratioSexWoman" />
+        <result column="ratio_course_arts" property="ratioCourseArts" />
+        <result column="ratio_course_sci" property="ratioCourseSci" />
+        <result column="ratio_assess_whole" property="ratioAssessWhole" />
+        <result column="ratio_assess_work" property="ratioAssessWork" />
+        <result column="ratio_assess_study" property="ratioAssessStudy" />
+        <result column="ratio_assess_shool" property="ratioAssessShool" />
+        <result column="ratio_assess_difficulty" property="ratioAssessDifficulty" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.wang.jmonkey.modules.ieg.model.dto.IegSchoolMajorDto" extends="BaseResultMap">
+        <result column="faculty_name" property="facultyName" />
+        <collection property="featureNames" ofType="java.lang.String">
+            <result column="features_name"/>
+        </collection>
+        <collection property="features" ofType="java.lang.String">
+            <result column="features_type"/>
+        </collection>
+    </resultMap>
+
+    <select id="list" resultMap="DtoResultMap">
+        select sm.*, f.name as faculty_name, d.lable as features_name, d.value as features_type
+        FROM ieg_school_major sm
+        LEFT JOIN ieg_school_major_features smf on sm.id = smf.school_major_id AND smf.delete_flag = 'Used'
+        LEFT JOIN sys_dict d ON smf.type = d.`value` AND d.delete_flag = 'Used'
+        LEFT JOIN ieg_school_faculty f ON f.id = sm.faculty_id AND f.delete_flag = 'Used'
+        WHERE sm.delete_flag = 'Used'
+        AND sm.school_id = #{schoolId}
+        AND sm.submit_id = #{submitId}
+        ORDER BY sort, code, create_date
+    </select>
+
+</mapper>

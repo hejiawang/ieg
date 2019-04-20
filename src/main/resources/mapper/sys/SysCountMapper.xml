@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.sys.mapper.SysCountMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.sys.model.dto.SysCountDto">
+        <result column="name" property="name" />
+        <result column="value" property="value" />
+    </resultMap>
+
+    <select id="base" resultMap="BaseResultMap">
+        select 'user' as name, count(1) as value FROM sys_user WHERE delete_flag = 'Used'
+        UNION ALL
+        select 'role' as name, count(1) as value FROM sys_role WHERE delete_flag = 'Used'
+        UNION ALL
+        select 'dept' as name, count(1) as value FROM sys_dept WHERE delete_flag = 'Used'
+    </select>
+
+    <select id="userRole" resultMap="BaseResultMap">
+        SELECT r.name as name, count(u.id) as value
+        FROM sys_role r
+        LEFT JOIN sys_user_role ur ON r.id = ur.role_id AND ur.delete_flag = 'Used'
+        LEFT JOIN sys_user u ON u.id = ur.user_id AND u.delete_flag = 'Used'
+        WHERE r.delete_flag = 'Used'
+        GROUP BY r.name
+    </select>
+
+    <select id="userDept" resultMap="BaseResultMap">
+        select d.name as name, count(u.id) AS value
+        FROM sys_dept d
+        LEFT JOIN sys_user_dept ud ON d.id = ud.dept_id AND ud.delete_flag = 'Used'
+        LEFT JOIN sys_user u ON u.id = ud.user_id AND u.delete_flag = 'Used'
+        WHERE d.delete_flag = 'Used'
+        GROUP BY d.name
+    </select>
+
+</mapper>

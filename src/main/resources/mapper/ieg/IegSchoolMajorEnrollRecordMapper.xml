@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.ieg.mapper.IegSchoolMajorEnrollRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.ieg.model.entity.IegSchoolMajorEnrollRecord">
+        <id column="id" property="id" />
+        <result column="school_major_id" property="schoolMajorId" />
+        <result column="year" property="year" />
+        <result column="type" property="type" />
+        <result column="score_min" property="scoreMin" />
+        <result column="score_max" property="scoreMax" />
+        <result column="plan_number" property="planNumber" />
+        <result column="real_number" property="realNumber" />
+
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+</mapper>

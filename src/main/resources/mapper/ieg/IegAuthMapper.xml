@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.ieg.mapper.IegAuthMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.ieg.model.entity.IegAuth">
+        <id column="user_id" property="userId" />
+        <result column="school_id" property="schoolId" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <delete id="deleteByUser">
+      delete from ieg_auth where user_id = #{userId}
+    </delete>
+
+    <select id="findShcoolIdByUser" resultType="java.lang.String">
+        select school_id from ieg_auth where delete_flag = 'Used' and user_id = #{userId}
+    </select>
+
+</mapper>

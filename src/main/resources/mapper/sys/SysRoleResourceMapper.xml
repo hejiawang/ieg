@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.sys.mapper.SysRoleResourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.sys.model.entity.SysRoleResource">
+        <id column="role_id" property="roleId" />
+        <result column="resource_id" property="resourceId" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <resultMap id="ButtonResultMap" type="com.wang.jmonkey.modules.sys.model.entity.SysButton">
+        <id column="id" property="id" />
+        <result column="url" property="url" />
+        <result column="method" property="method" />
+    </resultMap>
+
+    <select id="findRidByRole" resultType="java.lang.String">
+        select resource_id from sys_role_resource where delete_flag = 'Used' and role_id = #{roleId}
+    </select>
+
+    <select id="findRIdByRoleCodes" resultType="java.lang.String">
+        select rr.resource_id
+        from sys_role_resource rr
+        left join sys_role r on rr.role_id = r.id and r.delete_flag = 'Used'
+        where rr.delete_flag = 'Used'
+        and r.code in
+        <foreach collection="roleCodeList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteByRole">
+        delete from sys_role_resource where role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteByRid">
+        delete from sys_role_resource where resource_id = #{rId}
+    </delete>
+
+    <select id="selectPermissionByRoles" resultType="java.lang.String">
+        select DISTINCT b.permission
+        FROM sys_role_resource rr
+        LEFT JOIN sys_resource r ON rr.resource_id = r.id AND r.type = 'Button'
+        LEFT JOIN sys_button b ON r.r_id = b.id
+        WHERE rr.delete_flag = 'Used' AND b.permission != ''
+        AND rr.role_id in
+        <foreach collection="roleList" index="index" item="item" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </select>
+
+    <select id="selectButtonByRole" resultMap="ButtonResultMap">
+        select b.id as id, b.url as url, b.method as method
+        FROM sys_button b
+        INNER JOIN sys_resource resource ON b.id = resource.r_id
+        INNER JOIN sys_role_resource rr ON rr.resource_id = resource.id
+        INNER JOIN sys_role r ON r.id = rr.role_id
+        WHERE r.code = #{roleCode}
+    </select>
+</mapper>

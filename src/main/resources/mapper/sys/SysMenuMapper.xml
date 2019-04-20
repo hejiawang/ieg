@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.sys.mapper.SysMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.sys.model.entity.SysMenu">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="icon" property="icon" />
+        <result column="path" property="path" />
+        <result column="component" property="component" />
+        <result column="is_show" property="isShow" />
+        <result column="is_guide" property="isGuide" />
+        <result column="is_index" property="isIndex" />
+        <result column="show_type" property="showType" />
+        <result column="sort" property="sort" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <resultMap id="TreeDtoResultMap" type="com.wang.jmonkey.modules.sys.model.dto.SysMenuTreeDto" extends="BaseResultMap">
+        <result column="r_id" property="rId" />
+        <result column="parent_id" property="parentId" />
+    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.wang.jmonkey.modules.sys.model.dto.SysMenuDto" extends="BaseResultMap">
+        <result column="parent_id" property="parentId" />
+    </resultMap>
+
+    <select id="selectTreeDtoList" resultMap="TreeDtoResultMap">
+        select
+            DISTINCT
+            m.id as r_id,
+            m.name as name, m.icon as icon,
+            m.path as path, m.component as component,
+            m.is_show as is_show, m.is_guide as is_guide, m.is_index as is_index,
+            m.show_type as show_type, m.sort as sort,
+            r.parent_id as parent_id, r.id as id
+        FROM sys_menu m
+        INNER JOIN sys_resource r ON m.id = r.r_id AND r.delete_flag = 'Used'
+        <if test="roleCodeList != null">
+        LEFT JOIN sys_role_resource rr ON r.id = rr.resource_id AND rr.delete_flag = 'Used'
+        LEFT JOIN sys_role role ON rr.role_id = role.id AND role.delete_flag = 'Used'
+        </if>
+        WHERE m.delete_flag = 'Used'
+        <if test="roleCodeList != null">
+            AND role.code in
+            <foreach collection="roleCodeList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by m.sort
+    </select>
+
+    <select id="selectDtoById" resultMap="DtoResultMap">
+        select
+            m.*, r.parent_id as parent_id
+        FROM sys_menu m
+        INNER JOIN sys_resource r ON m.id = r.r_id AND r.delete_flag = 'Used'
+        WHERE m.id = #{id}
+    </select>
+
+    <select id="checkPath" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM sys_menu
+        WHERE delete_flag = 'Used'
+        AND path = #{path}
+        <if test=" id != '' and id != null">
+            AND id != #{id}
+        </if>
+    </select>
+</mapper>

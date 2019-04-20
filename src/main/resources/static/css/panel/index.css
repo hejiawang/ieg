@@ -1,0 +1,55 @@
+
+.layout{
+    height: 100%;
+}
+
+header {
+    height: 60px;
+    background-image: url(/images/panel/title.jpg);
+    background-size: cover;
+}
+
+.ivu-layout-sider{
+    background: #2a56ae;
+}
+
+.ivu-menu-submenu{
+    background: #2a56ae;
+    color: white;
+    font-size: 17px;
+}
+
+.ivu-menu-item{
+    font-size: 17px;
+    background: #2a56ae;
+}
+
+.ivu-menu-submenu .ivu-menu-item{
+    background: #3b71c9;
+}
+
+.ivu-menu{
+    background: #3b71c9;
+    color: white;
+    font-size: 17px;
+}
+
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
+    color: white;
+    background: #2b85e4;
+}
+
+.ivu-breadcrumb{
+    margin: 10px 0px;
+}
+
+content{
+    padding: 10px;
+    height: 100%;
+    background: #fff;
+}
+
+footer{
+    text-align: center;
+}
+

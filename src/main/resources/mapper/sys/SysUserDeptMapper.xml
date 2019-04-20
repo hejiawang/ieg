@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.sys.mapper.SysUserDeptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.sys.model.entity.SysUserDept">
+        <id column="user_id" property="userId" />
+        <result column="dept_id" property="deptId" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <resultMap id="DeptResultMap" type="com.wang.jmonkey.modules.sys.model.entity.SysDept">
+        <id column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="name" property="name" />
+        <result column="code" property="code" />
+        <result column="sort" property="sort" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <delete id="deleteByDeptId">
+        delete from sys_user_dept where dept_id = #{deptId}
+    </delete>
+
+    <delete id="deleteByUserId">
+        delete from sys_user_dept where user_id = #{userId}
+    </delete>
+
+    <select id="selectDeptByUserId" resultMap="DeptResultMap">
+        select d.*
+        FROM sys_user_dept ud
+        LEFT JOIN sys_dept d ON d.id = ud.dept_id AND d.delete_flag = 'Used'
+        WHERE ud.user_id = #{userId} AND ud.delete_flag = 'Used'
+    </select>
+
+</mapper>

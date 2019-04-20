@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.ieg.mapper.IegSchoolMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.ieg.model.entity.IegSchool">
+        <id column="id" property="id" />
+        <result column="logo" property="logo" />
+        <result column="name" property="name" />
+        <result column="code" property="code" />
+        <result column="area_province" property="areaProvince" />
+        <result column="area_city" property="areaCity" />
+        <result column="area_area" property="areaArea" />
+        <result column="area_detail" property="areaDetail" />
+        <result column="website" property="website" />
+        <result column="phone" property="phone" />
+        <result column="major_type" property="majorType" />
+        <result column="sort" property="sort" />
+        <result column="attach_type" property="attachType" />
+        <result column="attach_info" property="attachInfo" />
+        <result column="degree_type" property="degreeType" />
+        <result column="satisfy" property="satisfy" />
+        <result column="ratio_satisfy_environment" property="ratioSatisfyEnvironment" />
+        <result column="ratio_satisfy_life" property="ratioSatisfyLife" />
+        <result column="ratio_satisfy_edu" property="ratioSatisfyEdu" />
+        <result column="ratio_satisfy_work" property="ratioSatisfyWork" />
+
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.wang.jmonkey.modules.ieg.model.dto.IegSchoolDto" extends="BaseResultMap">
+        <association property="detail" javaType="com.wang.jmonkey.modules.ieg.model.entity.IegSchoolDetail">
+            <result column="detail_describe" property="describe" />
+            <result column="detail_faculty" property="faculty" />
+            <result column="detail_life" property="life" />
+            <result column="detail_scholarship" property="scholarship" />
+            <result column="detail_img1Path" property="img1Path" />
+            <result column="detail_img2Path" property="img2Path" />
+            <result column="detail_img3Path" property="img3Path" />
+            <result column="detail_img4Path" property="img4Path" />
+        </association>
+        <collection property="features" ofType="java.lang.String">
+            <result column="features_type"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="PageDtoResultMap" type="com.wang.jmonkey.modules.ieg.model.dto.IegSchoolPageDto" extends="BaseResultMap">
+        <result column="attachTypeName" property="attachTypeName" />
+        <result column="majorTypeName" property="majorTypeName" />
+    </resultMap>
+
+    <select id="findDtoById" resultMap="DtoResultMap">
+        select s.*,
+            sd.`describe` as detail_describe,
+            sd.faculty as detail_faculty, sd.life as detail_life, sd.scholarship as detail_scholarship,
+            sd.img1_path as detail_img1Path, sd.img2_path as detail_img2Path, sd.img3_path as detail_img3Path, sd.img4_path as detail_img4Path,
+            f.type as features_type
+        FROM ieg_school s
+        LEFT JOIN ieg_school_detail sd ON s.id = sd.school_id AND sd.delete_flag = 'Used'
+        LEFT JOIN ieg_school_features f ON s.id = f.school_id AND f.delete_flag = 'Used'
+        WHERE s.delete_flag = 'Used'
+        AND s.id = #{id}
+    </select>
+
+    <select id="pageList" resultMap="PageDtoResultMap">
+        SELECT s.*, attach.lable as attachTypeName, major.lable as majorTypeName
+        FROM ieg_school s
+        LEFT JOIN sys_dict attach ON attach.`value` = s.attach_type AND attach.delete_flag = 'Used'
+        LEFT JOIN sys_dict major on major.`value` = s.major_type AND major.delete_flag = 'Used'
+        WHERE s.delete_flag = 'Used'
+        <if test=" param.name != '' and param.name != null">
+            AND s.name like '%${param.name}%'
+        </if>
+        <if test=" param.userId != '' and param.userId != null">
+            AND s.id in (
+              select school_id from ieg_auth where user_id = #{param.userId}
+            )
+        </if>
+        ORDER BY s.sort, s.code, s.create_date
+        LIMIT ${limitStart}, ${size}
+    </select>
+
+    <select id="pageCount" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM ieg_school s
+        WHERE s.delete_flag = 'Used'
+        <if test=" name != '' and name != null">
+            AND s.name like '%${name}%'
+        </if>
+        <if test=" userId != '' and userId != null">
+            AND s.id in (
+              select school_id from ieg_auth where user_id = #{userId}
+            )
+        </if>
+    </select>
+
+</mapper>

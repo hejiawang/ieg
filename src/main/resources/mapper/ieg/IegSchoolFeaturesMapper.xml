@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.ieg.mapper.IegSchoolFeaturesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.ieg.model.entity.IegSchoolFeatures">
+        <id column="id" property="id" />
+        <result column="school_id" property="schoolId" />
+        <result column="type" property="type" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <delete id="deleteBySchool">
+        DELETE FROM ieg_school_features WHERE school_id = #{schoolId}
+    </delete>
+
+    <select id="selectFeatureNames" resultType="java.lang.String">
+        SELECT d.lable
+        FROM ieg_school_features f
+        LEFT JOIN sys_dict d ON f.type = d.`value` AND d.delete_flag = 'Used'
+        WHERE f.delete_flag = 'Used' AND f.school_id = #{schoolId}
+    </select>
+
+</mapper>
