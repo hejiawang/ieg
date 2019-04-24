@@ -31,6 +31,8 @@ public class FileUtil {
 
         public static String fileTest;
 
+        public static int fileFont;
+
         /**
          * 重命名文件分隔符
          */
@@ -44,6 +46,11 @@ public class FileUtil {
         @Value("${jmonkey.ieg.file-test}")
         public void setFileTest (String fileTest) {
             this.fileTest = fileTest;
+        }
+
+        @Value("${jmonkey.ieg.file-font}")
+        public void setFileFont (int fileFont) {
+            this.fileFont = fileFont;
         }
     }
 
@@ -85,7 +92,7 @@ public class FileUtil {
             File targetFile = new File(FileBuilder.staticLocationsFile + filePath);
             FileUtils.copyInputStreamToFile(is, targetFile);
 
-            Font font = new Font("宋体",Font.BOLD,30);
+            Font font = new Font("宋体",Font.BOLD,FileBuilder.fileFont);
             float alpha = new Float(0.8);
 
             BufferedImage bi = ImageUtil.read(targetFile);
@@ -94,7 +101,7 @@ public class FileUtil {
             int y = (height - fontSize) / 2;
 
             int width = bi.getWidth(null);
-            int x = (width - 500) / 2;
+            int x = (width - (FileBuilder.fileTest.length()+2)*fontSize) / 2;
 
             ImageUtil.pressText(targetFile, targetFile, FileBuilder.fileTest, Color.darkGray, font, x, y, alpha);
 
