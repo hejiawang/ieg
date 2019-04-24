@@ -19,6 +19,7 @@ jmonkey:
   user:
     photo: ${jmonkey.filePath}/user/photo/
   ieg:
+    file-test: 艾特诗教育文化传播有限公司
     school:
       img:
         logo: ${jmonkey.filePath}/ieg/school/logo/

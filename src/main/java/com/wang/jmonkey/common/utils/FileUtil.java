@@ -1,11 +1,14 @@
 package com.wang.jmonkey.common.utils;
 
 import com.xiaoleilu.hutool.lang.Assert;
+import com.xiaoleilu.hutool.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +29,8 @@ public class FileUtil {
          */
         public static String staticLocationsFile;
 
+        public static String fileTest;
+
         /**
          * 重命名文件分隔符
          */
@@ -34,6 +39,11 @@ public class FileUtil {
         @Value("${jmonkey.static-locations-file}")
         public void setStaticLocationsFile( String staticLocationsFile ){
             this.staticLocationsFile = staticLocationsFile;
+        }
+
+        @Value("${jmonkey.ieg.file-test}")
+        public void setFileTest (String fileTest) {
+            this.fileTest = fileTest;
         }
     }
 
@@ -74,6 +84,19 @@ public class FileUtil {
         try {
             File targetFile = new File(FileBuilder.staticLocationsFile + filePath);
             FileUtils.copyInputStreamToFile(is, targetFile);
+
+            Font font = new Font("宋体",Font.BOLD,30);
+            float alpha = new Float(0.8);
+
+            BufferedImage bi = ImageUtil.read(targetFile);
+            int height = bi.getHeight(null);
+            int fontSize = font.getSize();
+            int y = (height - fontSize) / 2;
+
+            int width = bi.getWidth(null);
+            int x = (width - 500) / 2;
+
+            ImageUtil.pressText(targetFile, targetFile, FileBuilder.fileTest, Color.darkGray, font, x, y, alpha);
 
             result = true;
         } catch (IOException e) {
