@@ -49,13 +49,13 @@ public abstract class BaseHttp {
      * @param basePath 不同业务模块上传的文件目录
      * @return HttpResult
      */
-    public HttpResult<String> uploadFile(MultipartFile uploadFile, String basePath) {
+    public HttpResult<String> uploadFile(MultipartFile uploadFile, String basePath, Boolean isTest) {
         HttpResult<String> result = new HttpResult<>();
 
         try {
             String filePath = basePath + FileUtil.renderFileName(uploadFile.getOriginalFilename());
 
-            if( FileUtil.uploadFile(filePath, uploadFile.getInputStream()) ) result.setResult(filePath);
+            if( FileUtil.uploadFile(filePath, uploadFile.getInputStream(), isTest) ) result.setResult(filePath);
             else result.setIsSuccess(false);
         } catch (IOException e) {
             logger.error("upload file error : ", e);

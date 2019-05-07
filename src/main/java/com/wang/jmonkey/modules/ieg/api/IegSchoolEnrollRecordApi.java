@@ -93,6 +93,6 @@ public class IegSchoolEnrollRecordApi extends BaseHttp {
      */
     @PostMapping("/file")
     public HttpResult<String> file(@RequestParam(value = "file") MultipartFile uploadFile, String schoolId, String content ){
-        return super.uploadFile(uploadFile, filePath + schoolId + File.separator + content + File.separator);
+        return super.uploadFile(uploadFile, filePath + schoolId + File.separator + content + File.separator, true);
     }
 }

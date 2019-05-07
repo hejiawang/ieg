@@ -93,6 +93,6 @@ public class IegSchoolMajorProblemApi extends BaseHttp {
      */
     @PostMapping("/file")
     public HttpResult<String> file(@RequestParam(value = "file") MultipartFile uploadFile, String schoolMajorId ){
-        return super.uploadFile(uploadFile, filePath + schoolMajorId + File.separator);
+        return super.uploadFile(uploadFile, filePath + schoolMajorId + File.separator, true);
     }
 }

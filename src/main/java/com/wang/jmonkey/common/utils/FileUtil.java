@@ -82,9 +82,10 @@ public class FileUtil {
      * 上传文件
      * @param filePath 上传文件路径
      * @param is 上传文件的输入流
+     * @param isTest true 标记水印
      * @return
      */
-    public static boolean uploadFile(String filePath, InputStream is) {
+    public static boolean uploadFile(String filePath, InputStream is, Boolean isTest) {
         Assert.notBlank(filePath, "上传文件路径不能为null");
 
         boolean result;
@@ -92,18 +93,20 @@ public class FileUtil {
             File targetFile = new File(FileBuilder.staticLocationsFile + filePath);
             FileUtils.copyInputStreamToFile(is, targetFile);
 
-            Font font = new Font("微软雅黑",Font.BOLD,FileBuilder.fileFont);
-            float alpha = new Float(0.8);
+            if (isTest) {
+                Font font = new Font("微软雅黑",Font.BOLD,FileBuilder.fileFont);
+                float alpha = new Float(0.8);
 
-            BufferedImage bi = ImageUtil.read(targetFile);
-            int height = bi.getHeight(null);
-            int fontSize = font.getSize();
-            int y = (height - fontSize) / 2;
+                BufferedImage bi = ImageUtil.read(targetFile);
+                int height = bi.getHeight(null);
+                int fontSize = font.getSize();
+                int y = (height - fontSize) / 2;
 
-            int width = bi.getWidth(null);
-            int x = (width - (FileBuilder.fileTest.length())*fontSize) / 2;
+                int width = bi.getWidth(null);
+                int x = (width - (FileBuilder.fileTest.length())*fontSize) / 2;
 
-            ImageUtil.pressText(targetFile, targetFile, FileBuilder.fileTest, Color.white, font, x, y, alpha);
+                ImageUtil.pressText(targetFile, targetFile, FileBuilder.fileTest, Color.white, font, x, y, alpha);
+            }
 
             result = true;
         } catch (IOException e) {

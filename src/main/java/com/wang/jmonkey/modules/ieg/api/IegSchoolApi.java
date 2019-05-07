@@ -96,7 +96,17 @@ public class IegSchoolApi extends BaseHttp {
      */
     @PostMapping("/logo")
     public HttpResult<String> logo(@RequestParam(value = "file") MultipartFile uploadFile ){
-        return super.uploadFile(uploadFile, logoImage);
+        return super.uploadFile(uploadFile, logoImage, false);
+    }
+
+    /**
+     * 上传院校详细图片
+     * @param uploadFile
+     * @return
+     */
+    @PostMapping("/imgInfo")
+    public HttpResult<String> imgInfo(@RequestParam(value = "file") MultipartFile uploadFile) {
+        return super.uploadFile(uploadFile, logoImage, true);
     }
 
 }

@@ -112,7 +112,7 @@ public class SysUserApi extends BaseHttp {
      */
     @PostMapping("/uploadPhoto")
     public HttpResult<String> uploadPhoto( @RequestParam(value = "file") MultipartFile uploadFile ){
-        return super.uploadFile(uploadFile, userPhotoPath);
+        return super.uploadFile(uploadFile, userPhotoPath, false);
     }
 
     /**

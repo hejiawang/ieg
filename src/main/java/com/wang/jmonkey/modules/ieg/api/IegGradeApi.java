@@ -104,7 +104,7 @@ public class IegGradeApi extends BaseHttp {
      */
     @PostMapping("/file")
     public HttpResult<String> file(@RequestParam(value = "file") MultipartFile uploadFile ){
-        return super.uploadFile(uploadFile, filePath);
+        return super.uploadFile(uploadFile, filePath, true);
     }
 
     /**
