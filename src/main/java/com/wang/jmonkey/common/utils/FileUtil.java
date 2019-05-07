@@ -92,7 +92,7 @@ public class FileUtil {
             File targetFile = new File(FileBuilder.staticLocationsFile + filePath);
             FileUtils.copyInputStreamToFile(is, targetFile);
 
-            Font font = new Font("宋体",Font.BOLD,FileBuilder.fileFont);
+            Font font = new Font("微软雅黑",Font.BOLD,FileBuilder.fileFont);
             float alpha = new Float(0.8);
 
             BufferedImage bi = ImageUtil.read(targetFile);
@@ -101,9 +101,9 @@ public class FileUtil {
             int y = (height - fontSize) / 2;
 
             int width = bi.getWidth(null);
-            int x = (width - (FileBuilder.fileTest.length()+2)*fontSize) / 2;
+            int x = (width - (FileBuilder.fileTest.length())*fontSize) / 2;
 
-            ImageUtil.pressText(targetFile, targetFile, FileBuilder.fileTest, Color.darkGray, font, x, y, alpha);
+            ImageUtil.pressText(targetFile, targetFile, FileBuilder.fileTest, Color.white, font, x, y, alpha);
 
             result = true;
         } catch (IOException e) {

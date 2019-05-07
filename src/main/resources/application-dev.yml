@@ -19,7 +19,7 @@ jmonkey:
   user:
     photo: ${jmonkey.filePath}/user/photo/
   ieg:
-    file-test: 艾特诗教育文化传播有限公司
+    file-test: 艾 特 诗 教 育
     file-font: 20
     school:
       img:
