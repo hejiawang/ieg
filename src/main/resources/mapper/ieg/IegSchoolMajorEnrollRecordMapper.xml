@@ -12,6 +12,7 @@
         <result column="score_max" property="scoreMax" />
         <result column="plan_number" property="planNumber" />
         <result column="real_number" property="realNumber" />
+        <result column="state" property="state" />
 
         <result column="create_date" property="createDate" />
         <result column="create_by" property="createBy" />
@@ -20,5 +21,9 @@
         <result column="remark" property="remark" />
         <result column="delete_flag" property="deleteFlag" />
     </resultMap>
+
+    <update id="modifyState">
+      UPDATE ieg_school_major_enroll_record SET state = 'Yes' WHERE id = #{id}
+    </update>
 
 </mapper>

@@ -5,6 +5,7 @@ import com.wang.jmonkey.modules.ieg.model.entity.IegSchoolMajorEnrollRecord;
 import com.wang.jmonkey.modules.ieg.mapper.IegSchoolMajorEnrollRecordMapper;
 import com.wang.jmonkey.modules.ieg.service.IIegSchoolMajorEnrollRecordService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,12 @@ import java.util.List;
 public class IegSchoolMajorEnrollRecordServiceImpl extends ServiceImpl<IegSchoolMajorEnrollRecordMapper, IegSchoolMajorEnrollRecord> implements IIegSchoolMajorEnrollRecordService {
 
     /**
+     * mapper
+     */
+    @Autowired
+    private IegSchoolMajorEnrollRecordMapper mapper;
+
+    /**
      * 分页查询信息
      * @param entity 实体信息
      * @return
@@ -32,5 +39,20 @@ public class IegSchoolMajorEnrollRecordServiceImpl extends ServiceImpl<IegSchool
         wrapper.orderBy("year");
 
         return super.selectList(wrapper);
+    }
+
+    /**
+     * 校验信息是否正确
+     * @param entity 实体信息
+     * @return true 正确
+     */
+    @Override
+    public Boolean checkInfo(IegSchoolMajorEnrollRecord entity) {
+        IegSchoolMajorEnrollRecord old = super.selectById(entity.getId());
+        Boolean isSuccess =  Double.compare(entity.getScoreMin(), old.getScoreMin()) == 0 ;
+
+        if (isSuccess) mapper.modifyState(entity);
+
+        return isSuccess;
     }
 }

@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface IegSchoolMajorEnrollRecordMapper extends BaseMapper<IegSchoolMajorEnrollRecord> {
 
+    int modifyState(IegSchoolMajorEnrollRecord entity);
 }

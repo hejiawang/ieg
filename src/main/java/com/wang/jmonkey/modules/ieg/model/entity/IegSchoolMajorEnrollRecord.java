@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.wang.jmonkey.common.model.BaseEntity;
 
+import com.wang.jmonkey.common.model.enums.YesOrNoEnum;
 import com.wang.jmonkey.modules.ieg.model.enums.IegCourseTypeEnums;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -59,6 +60,12 @@ public class IegSchoolMajorEnrollRecord extends BaseEntity<IegSchoolMajorEnrollR
      * 实际招收人数
      */
     private Integer realNumber;
+
+    /**
+     * 校验状态
+     */
+    @JSONField(serialzeFeatures= SerializerFeature.WriteEnumUsingToString)
+    private YesOrNoEnum state;
 
     @Override
     protected Serializable pkVal() {

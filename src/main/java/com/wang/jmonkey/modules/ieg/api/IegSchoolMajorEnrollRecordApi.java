@@ -54,6 +54,16 @@ public class IegSchoolMajorEnrollRecordApi extends BaseHttp {
     }
 
     /**
+     * 校验信息是否正确
+     * @param entity 实体信息
+     * @return true 正确
+     */
+    @PostMapping(value = "/checkInfo")
+    public HttpResult<Boolean> checkInfo(@RequestBody IegSchoolMajorEnrollRecord entity) {
+        return new HttpResult<>(service.checkInfo(entity));
+    }
+
+    /**
      * 删除实体信息
      * @param id 实体ID
      * @return

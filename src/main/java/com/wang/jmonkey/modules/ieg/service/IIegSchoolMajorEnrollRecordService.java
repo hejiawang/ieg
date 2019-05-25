@@ -21,4 +21,11 @@ public interface IIegSchoolMajorEnrollRecordService extends IService<IegSchoolMa
      * @return
      */
     List<IegSchoolMajorEnrollRecord> list(IegSchoolMajorEnrollRecord entity);
+
+    /**
+     * 校验信息是否正确
+     * @param entity 实体信息
+     * @return true 正确
+     */
+    Boolean checkInfo(IegSchoolMajorEnrollRecord entity);
 }
