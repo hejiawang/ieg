@@ -25,4 +25,11 @@ public interface IegSchoolMajorMapper extends BaseMapper<IegSchoolMajor> {
      * @return IegSchoolMajorDto
      */
     List<IegSchoolMajorDto> list(IegSchoolMajorParam param);
+
+    /**
+     * 重置学费信息为空
+     * @param id 专业id
+     * @return int
+     */
+    Integer restMoney(@Param("id") String id);
 }

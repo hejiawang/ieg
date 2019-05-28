@@ -59,8 +59,14 @@ public class IegSchoolMajorServiceImpl extends ServiceImpl<IegSchoolMajorMapper,
     public Boolean modify(IegSchoolMajorParam param) {
         IegSchoolMajor schoolMajor = param.converToEntity();
 
-        return super.updateById(schoolMajor)
+        Boolean result = super.updateById(schoolMajor)
                 && majorFeaturesService.merge(schoolMajor.getId(), param.getFeatures());
+
+        if (param.getMoney() == null) {
+            mapper.restMoney(param.getId());
+        }
+
+        return result;
     }
 
     /**

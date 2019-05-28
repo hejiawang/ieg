@@ -47,6 +47,10 @@
         </collection>
     </resultMap>
 
+    <update id="restMoney">
+        UPDATE ieg_school_major SET money = null WHERE id = #{id}
+    </update>
+
     <select id="list" resultMap="DtoResultMap">
         select sm.*, f.name as faculty_name, d.lable as features_name, d.value as features_type
         FROM ieg_school_major sm
