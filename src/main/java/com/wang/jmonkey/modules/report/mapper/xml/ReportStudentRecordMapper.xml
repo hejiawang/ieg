@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.report.mapper.ReportStudentRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.report.model.entity.ReportStudentRecord">
+        <id column="id" property="id" />
+    <result column="create_date" property="createDate" />
+    <result column="create_by" property="createBy" />
+    <result column="update_date" property="updateDate" />
+    <result column="update_by" property="updateBy" />
+    <result column="remark" property="remark" />
+    <result column="delete_flag" property="deleteFlag" />
+        <result column="student_id" property="studentId" />
+        <result column="record_date" property="recordDate" />
+        <result column="position" property="position" />
+        <result column="total_score" property="totalScore" />
+        <result column="yuwen_score" property="yuwenScore" />
+        <result column="shuxu_score" property="shuxuScore" />
+        <result column="yingyu_score" property="yingyuScore" />
+        <result column="wuli_score" property="wuliScore" />
+        <result column="huaxue_score" property="huaxueScore" />
+        <result column="shengwu_score" property="shengwuScore" />
+        <result column="lishi_score" property="lishiScore" />
+        <result column="dili_score" property="diliScore" />
+        <result column="zhengzhi_score" property="zhengzhiScore" />
+        <result column="yuwen_state" property="yuwenState" />
+        <result column="shuxu_state" property="shuxuState" />
+        <result column="yingyu_state" property="yingyuState" />
+        <result column="wuli_state" property="wuliState" />
+        <result column="huaxue_state" property="huaxueState" />
+        <result column="shengwu_state" property="shengwuState" />
+        <result column="lishi_state" property="lishiState" />
+        <result column="dili_state" property="diliState" />
+        <result column="zhengzhi_state" property="zhengzhiState" />
+    </resultMap>
+
+</mapper>
