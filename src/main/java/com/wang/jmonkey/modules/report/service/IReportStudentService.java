@@ -6,6 +6,8 @@ import com.wang.jmonkey.modules.report.model.entity.ReportStudent;
 import com.baomidou.mybatisplus.service.IService;
 import com.wang.jmonkey.modules.report.model.param.ReportStudentParam;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 报告————学生基本信息 服务类
@@ -37,4 +39,11 @@ public interface IReportStudentService extends IService<ReportStudent> {
      * @return Boolean
      */
     Boolean modify(ReportStudentParam param);
+
+    /**
+     * selectDtoById
+     * @param id id
+     * @return ReportStudentDto
+     */
+    ReportStudentDto selectDtoById(String id);
 }

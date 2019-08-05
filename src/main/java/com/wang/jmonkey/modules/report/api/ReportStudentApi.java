@@ -77,8 +77,8 @@ public class ReportStudentApi extends BaseHttp {
      * @return ReportStudent
      */
     @GetMapping(value = "/find/{id}")
-    public HttpResult<ReportStudent> findById(@PathVariable Serializable id ){
-        return new HttpResult<>(service.selectById(id));
+    public HttpResult<ReportStudentDto> findById(@PathVariable String id ){
+        return new HttpResult<>(service.selectDtoById(id));
     }
 
 }

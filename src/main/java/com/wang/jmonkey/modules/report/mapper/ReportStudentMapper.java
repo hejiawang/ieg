@@ -1,7 +1,9 @@
 package com.wang.jmonkey.modules.report.mapper;
 
+import com.wang.jmonkey.modules.report.model.dto.ReportStudentDto;
 import com.wang.jmonkey.modules.report.model.entity.ReportStudent;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +15,10 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface ReportStudentMapper extends BaseMapper<ReportStudent> {
 
+    /**
+     * selectDtoById
+     * @param id id
+     * @return ReportStudentDto
+     */
+    ReportStudentDto selectDtoById(@Param("id") String id);
 }

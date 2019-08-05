@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 报告————学生基本信息 服务实现类
@@ -94,5 +96,15 @@ public class ReportStudentServiceImpl extends ServiceImpl<ReportStudentMapper, R
                 && areaService.margeList(student.getId(), param.getAreaList())
                 && majorService.margeList(student.getId(), param.getMajorList())
                 && schoolService.margeList(student.getId(), param.getSchoolList());
+    }
+
+    /**
+     * selectDtoById
+     * @param id id
+     * @return ReportStudentDto
+     */
+    @Override
+    public ReportStudentDto selectDtoById(String id) {
+        return mapper.selectDtoById(id);
     }
 }
