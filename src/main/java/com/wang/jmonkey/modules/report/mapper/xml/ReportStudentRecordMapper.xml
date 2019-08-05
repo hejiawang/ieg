@@ -5,12 +5,6 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.report.model.entity.ReportStudentRecord">
         <id column="id" property="id" />
-    <result column="create_date" property="createDate" />
-    <result column="create_by" property="createBy" />
-    <result column="update_date" property="updateDate" />
-    <result column="update_by" property="updateBy" />
-    <result column="remark" property="remark" />
-    <result column="delete_flag" property="deleteFlag" />
         <result column="student_id" property="studentId" />
         <result column="record_date" property="recordDate" />
         <result column="position" property="position" />
@@ -33,6 +27,13 @@
         <result column="lishi_state" property="lishiState" />
         <result column="dili_state" property="diliState" />
         <result column="zhengzhi_state" property="zhengzhiState" />
+
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
     </resultMap>
 
 </mapper>

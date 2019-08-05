@@ -2,6 +2,7 @@ package com.wang.jmonkey.modules.report.mapper;
 
 import com.wang.jmonkey.modules.report.model.entity.ReportStudentSchool;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,10 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface ReportStudentSchoolMapper extends BaseMapper<ReportStudentSchool> {
 
+    /**
+     * deleteByStudentId
+     * @param studentId studentId
+     * @return int
+     */
+    int deleteByStudentId(@Param("studentId") String studentId);
 }

@@ -3,6 +3,8 @@ package com.wang.jmonkey.modules.report.service;
 import com.wang.jmonkey.modules.report.model.entity.ReportStudentMajor;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 报告————学生意向专业 服务类
@@ -13,4 +15,11 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface IReportStudentMajorService extends IService<ReportStudentMajor> {
 
+    /**
+     * margeList
+     * @param studentId studentId
+     * @param majorList majorList
+     * @return boolean
+     */
+    boolean margeList(String studentId, List<ReportStudentMajor> majorList);
 }

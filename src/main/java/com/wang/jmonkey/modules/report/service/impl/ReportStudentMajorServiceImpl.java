@@ -4,7 +4,10 @@ import com.wang.jmonkey.modules.report.model.entity.ReportStudentMajor;
 import com.wang.jmonkey.modules.report.mapper.ReportStudentMajorMapper;
 import com.wang.jmonkey.modules.report.service.IReportStudentMajorService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReportStudentMajorServiceImpl extends ServiceImpl<ReportStudentMajorMapper, ReportStudentMajor> implements IReportStudentMajorService {
 
+    /**
+     * mapper
+     */
+    @Autowired
+    private ReportStudentMajorMapper mapper;
+
+    /**
+     * margeList
+     * @param studentId studentId
+     * @param majorList majorList
+     * @return boolean
+     */
+    @Override
+    public boolean margeList(String studentId, List<ReportStudentMajor> majorList) {
+        mapper.deleteByStudentId(studentId);
+
+        majorList.forEach(major -> {
+            major.setStudentId(studentId);
+
+            super.insert(major);
+        });
+
+        return true;
+    }
 }

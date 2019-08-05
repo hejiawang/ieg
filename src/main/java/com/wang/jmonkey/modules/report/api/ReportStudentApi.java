@@ -1,18 +1,19 @@
 package com.wang.jmonkey.modules.report.api;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wang.jmonkey.common.http.abs.BaseHttp;
 import com.wang.jmonkey.common.http.result.HttpPageResult;
 import com.wang.jmonkey.common.http.result.HttpResult;
+import com.wang.jmonkey.common.model.vo.UserVo;
+import com.wang.jmonkey.modules.report.model.dto.ReportStudentDto;
 import com.wang.jmonkey.modules.report.model.entity.ReportStudent;
+import com.wang.jmonkey.modules.report.model.param.ReportStudentParam;
 import com.wang.jmonkey.modules.report.service.IReportStudentService;
 
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @Description: 报告————学生基本信息 api
@@ -29,40 +30,41 @@ public class ReportStudentApi extends BaseHttp {
     /**
      * 分页查询信息
      * @param page page
-     * @param entity 实体信息
-     * @return
+     * @param param 实体信息
+     * @return Page
      */
-    @GetMapping(value = "/list")
-    public HttpPageResult<ReportStudent> list(Page<ReportStudent> page, ReportStudent entity) {
-        EntityWrapper wrapper = new EntityWrapper<ReportStudent>();
-
-        return new HttpPageResult<>( service.selectPage( page, wrapper ) );
+    @GetMapping(value = "/listAll")
+    public HttpPageResult<ReportStudentDto> listAll(Page<ReportStudentDto> page,
+                                                    ReportStudentParam param) {
+        return new HttpPageResult<>( service.listAll( page, param ) );
     }
 
     /**
      * 保存实体信息
-     * @param entity 实体信息
-     * @return
+     * @param param 实体信息
+     * @return Boolean
      */
     @PostMapping(value = "/save")
-    public HttpResult<Boolean> save( @RequestBody ReportStudent entity ){
-        return new HttpResult<>(service.insert(entity));
+    public HttpResult<Boolean> save(@RequestBody ReportStudentParam param, UserVo userVo){
+        param.setUserId(userVo.getId());
+
+        return new HttpResult<>(service.save(param));
     }
 
     /**
      * 修改实体信息
-     * @param entity 实体信息
-     * @return
+     * @param param 实体信息
+     * @return Boolean
      */
     @PutMapping(value = "/modify")
-    public HttpResult<Boolean> modify( @RequestBody ReportStudent entity ){
-        return new HttpResult<>(service.updateById(entity));
+    public HttpResult<Boolean> modify( @RequestBody ReportStudentParam param ){
+        return new HttpResult<>(service.modify(param));
     }
 
     /**
      * 删除实体信息
      * @param id 实体ID
-     * @return
+     * @return Boolean
      */
     @DeleteMapping(value = "/delete/{id}")
     public HttpResult<Boolean> delete( @PathVariable Serializable id ){
@@ -72,7 +74,7 @@ public class ReportStudentApi extends BaseHttp {
     /**
      * 查找实体信息
      * @param id 实体ID
-     * @return
+     * @return ReportStudent
      */
     @GetMapping(value = "/find/{id}")
     public HttpResult<ReportStudent> findById(@PathVariable Serializable id ){
