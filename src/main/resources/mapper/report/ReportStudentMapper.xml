@@ -8,6 +8,7 @@
         <result column="user_id" property="userId" />
         <result column="code" property="code" />
         <result column="name" property="name" />
+        <result column="phone" property="phone" />
         <result column="sex" property="sex" />
         <result column="birthday" property="birthday" />
         <result column="grade" property="grade" />

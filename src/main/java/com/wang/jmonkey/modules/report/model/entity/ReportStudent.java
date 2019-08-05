@@ -45,6 +45,10 @@ public class ReportStudent extends BaseEntity<ReportStudent> {
      */
     private String name;
     /**
+     * 联系方式
+     */
+    private String phone;
+    /**
      * 性别 man男 woman女 other其他
      */
     @JSONField(serialzeFeatures= SerializerFeature.WriteEnumUsingToString)
