@@ -6,7 +6,6 @@ import com.wang.jmonkey.common.http.result.HttpPageResult;
 import com.wang.jmonkey.common.http.result.HttpResult;
 import com.wang.jmonkey.common.model.vo.UserVo;
 import com.wang.jmonkey.modules.report.model.dto.ReportStudentDto;
-import com.wang.jmonkey.modules.report.model.entity.ReportStudent;
 import com.wang.jmonkey.modules.report.model.param.ReportStudentParam;
 import com.wang.jmonkey.modules.report.service.IReportStudentService;
 

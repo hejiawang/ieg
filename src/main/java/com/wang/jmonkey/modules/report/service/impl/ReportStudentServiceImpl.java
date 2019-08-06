@@ -60,8 +60,13 @@ public class ReportStudentServiceImpl extends ServiceImpl<ReportStudentMapper, R
      */
     @Override
     public Page<ReportStudentDto> listAll(Page<ReportStudentDto> page, ReportStudentParam param) {
+        param.buildLimitStart();
 
-        // TODO
+        page.setRecords(
+            mapper.listPage(param)
+        ).setTotal(
+            mapper.listPageTotal(param)
+        );
 
         return page;
     }

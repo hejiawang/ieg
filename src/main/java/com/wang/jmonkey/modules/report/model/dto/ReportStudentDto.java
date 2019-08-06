@@ -24,6 +24,11 @@ import java.util.List;
 public class ReportStudentDto extends ReportStudent {
 
     /**
+     * 接待顾问名称
+     */
+    private String userName;
+
+    /**
      * 考生意向城市
      */
     private List<ReportStudentArea> areaList;

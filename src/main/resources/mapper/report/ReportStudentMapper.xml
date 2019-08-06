@@ -26,6 +26,7 @@
     </resultMap>
 
     <resultMap id="DtoResultMap" type="com.wang.jmonkey.modules.report.model.dto.ReportStudentDto" extends="BaseResultMap">
+        <result column="user_name" property="userName" />
         <collection property="areaList" ofType="com.wang.jmonkey.modules.report.model.entity.ReportStudentArea">
             <result column="area_code" property="areaCode" />
             <result column="area_name" property="areaName" />
@@ -41,15 +42,61 @@
 
     <select id="selectDtoById" resultMap="DtoResultMap">
         select
-            s.*,
+            s.*, u.real_name as user_name,
             area.area_code as area_code, area.area_name as area_name,
             major.major_name as major_name,
             school.school_id as school_id, school.school_name as school_name
         FROM report_student s
+        left join sys_user u on user.id = s.user_id
         LEFT JOIN report_student_area area ON area.student_id = s.id
         LEFT JOIN report_student_major major ON major.student_id = s.id
         LEFT JOIN report_student_school school ON school.student_id = s.id
         WHERE s.id = #{id}
+    </select>
+
+    <select id="listPage" resultMap="DtoResultMap">
+        select
+            s.*, u.real_name as user_name,
+            area.area_code as area_code, area.area_name as area_name,
+            major.major_name as major_name,
+            school.school_id as school_id, school.school_name as school_name
+        FROM report_student s
+        left join sys_user u on user.id = s.user_id
+        LEFT JOIN report_student_area area ON area.student_id = s.id
+        LEFT JOIN report_student_major major ON major.student_id = s.id
+        LEFT JOIN report_student_school school ON school.student_id = s.id
+        where s.delete_flag = 'Used'
+        <if test=" userId != '' and userId != null">
+            AND s.userId = #{userId}
+        </if>
+        <if test=" phone != '' and phone != null">
+            AND s.phone like '%${phone}%'
+        </if>
+        <if test=" code != '' and code != null">
+            AND s.code like '%${code}%'
+        </if>
+        <if test=" name != '' and name != null">
+            AND s.name like '%${name}%'
+        </if>
+        order by s.report_date, s.code
+    </select>
+
+    <select id="listPageTotal" resultType="java.lang.Long">
+        select count(1)
+        FROM report_student
+        where delete_flag = 'Used'
+        <if test=" userId != '' and userId != null">
+            AND s.userId = #{userId}
+        </if>
+        <if test=" phone != '' and phone != null">
+            AND s.phone like '%${phone}%'
+        </if>
+        <if test=" code != '' and code != null">
+            AND s.code like '%${code}%'
+        </if>
+        <if test=" name != '' and name != null">
+            AND s.name like '%${name}%'
+        </if>
     </select>
 
 </mapper>

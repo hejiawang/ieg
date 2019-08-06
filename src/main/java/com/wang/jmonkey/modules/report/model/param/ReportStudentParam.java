@@ -40,6 +40,28 @@ public class ReportStudentParam extends ReportStudent {
     private List<ReportStudentSchool> schoolList;
 
     /**
+     * 分页——current
+     */
+    private int current;
+
+    /**
+     * 分页——size
+     */
+    private int size;
+
+    /**
+     * 分页——limitStrat
+     */
+    private int limitStrat;
+
+    /**
+     * buildLimitStart
+     */
+    public void buildLimitStart() {
+        this.limitStrat = this.size * ( this.current - 1 );
+    }
+
+    /**
      * converToEntity
      * @return ReportStudent
      */
