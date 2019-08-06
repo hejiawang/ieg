@@ -46,4 +46,11 @@ public interface IReportStudentService extends IService<ReportStudent> {
      * @return ReportStudentDto
      */
     ReportStudentDto selectDtoById(String id);
+
+    /**
+     * checkCode
+     * @param student student
+     * @return Boolean
+     */
+    Boolean checkCode(ReportStudent student);
 }

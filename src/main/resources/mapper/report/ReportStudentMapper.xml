@@ -47,7 +47,7 @@
             major.major_name as major_name,
             school.school_id as school_id, school.school_name as school_name
         FROM report_student s
-        left join sys_user u on user.id = s.user_id
+        left join sys_user u on u.id = s.user_id
         LEFT JOIN report_student_area area ON area.student_id = s.id
         LEFT JOIN report_student_major major ON major.student_id = s.id
         LEFT JOIN report_student_school school ON school.student_id = s.id
@@ -61,13 +61,13 @@
             major.major_name as major_name,
             school.school_id as school_id, school.school_name as school_name
         FROM report_student s
-        left join sys_user u on user.id = s.user_id
+        left join sys_user u on u.id = s.user_id
         LEFT JOIN report_student_area area ON area.student_id = s.id
         LEFT JOIN report_student_major major ON major.student_id = s.id
         LEFT JOIN report_student_school school ON school.student_id = s.id
         where s.delete_flag = 'Used'
         <if test=" userId != '' and userId != null">
-            AND s.userId = #{userId}
+            AND s.user_id = #{userId}
         </if>
         <if test=" phone != '' and phone != null">
             AND s.phone like '%${phone}%'
@@ -83,10 +83,10 @@
 
     <select id="listPageTotal" resultType="java.lang.Long">
         select count(1)
-        FROM report_student
-        where delete_flag = 'Used'
+        FROM report_student s
+        where s.delete_flag = 'Used'
         <if test=" userId != '' and userId != null">
-            AND s.userId = #{userId}
+            AND s.user_id = #{userId}
         </if>
         <if test=" phone != '' and phone != null">
             AND s.phone like '%${phone}%'
@@ -96,6 +96,16 @@
         </if>
         <if test=" name != '' and name != null">
             AND s.name like '%${name}%'
+        </if>
+    </select>
+
+    <select id="checkCode" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM report_student
+        WHERE delete_flag = 'Used'
+        AND code = #{code}
+        <if test=" id != '' and id != null">
+            AND id != #{id}
         </if>
     </select>
 

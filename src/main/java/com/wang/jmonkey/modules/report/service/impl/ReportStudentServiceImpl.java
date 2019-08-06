@@ -112,4 +112,14 @@ public class ReportStudentServiceImpl extends ServiceImpl<ReportStudentMapper, R
     public ReportStudentDto selectDtoById(String id) {
         return mapper.selectDtoById(id);
     }
+
+    /**
+     * checkCode
+     * @param student student
+     * @return Boolean
+     */
+    @Override
+    public Boolean checkCode(ReportStudent student) {
+        return  mapper.checkCode(student) > 0;
+    }
 }

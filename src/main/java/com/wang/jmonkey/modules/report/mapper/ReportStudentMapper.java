@@ -38,4 +38,11 @@ public interface ReportStudentMapper extends BaseMapper<ReportStudent> {
      * @return long
      */
     long listPageTotal(ReportStudentParam param);
+
+    /**
+     * checkCode
+     * @param student student
+     * @return Boolean
+     */
+    int checkCode(ReportStudent student);
 }
