@@ -27,16 +27,13 @@ public class ReportStudentRecordApi extends BaseHttp {
     private IReportStudentRecordService service;
 
     /**
-     * 分页查询信息
-     * @param page page
+     * 查询信息
      * @param entity 实体信息
-     * @return
+     * @return HttpResult
      */
     @GetMapping(value = "/list")
-    public HttpPageResult<ReportStudentRecord> list(Page<ReportStudentRecord> page, ReportStudentRecord entity) {
-        EntityWrapper wrapper = new EntityWrapper<ReportStudentRecord>();
-
-        return new HttpPageResult<>( service.selectPage( page, wrapper ) );
+    public HttpResult<List<ReportStudentRecord>> list(ReportStudentRecord entity) {
+        return new HttpResult<>( service.list( entity ) );
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.wang.jmonkey.modules.ieg.service.impl;
 
+import com.baomidou.mybatisplus.enums.SqlLike;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolDto;
 import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolPageDto;
@@ -111,5 +113,19 @@ public class IegSchoolServiceImpl extends ServiceImpl<IegSchoolMapper, IegSchool
                 .setCurrent( page.getCurrent() )
                 .setSize( page.getSize() );
         return page;
+    }
+
+    /**
+     * listAll
+     * @param param param
+     * @return List
+     */
+    @Override
+    public List<IegSchool> listAll(IegSchoolSearchParam param) {
+        EntityWrapper<IegSchool> wrapper = new EntityWrapper<>();
+        wrapper.like("name", param.getName(), SqlLike.DEFAULT);
+        wrapper.orderBy("sort");
+
+        return super.selectList(wrapper);
     }
 }

@@ -9,6 +9,7 @@ import com.wang.jmonkey.modules.ieg.model.param.IegSchoolParam;
 import com.wang.jmonkey.modules.ieg.model.param.IegSchoolSearchParam;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -48,4 +49,11 @@ public interface IIegSchoolService extends IService<IegSchool> {
      * @return
      */
     Page<IegSchoolPageDto> pageList(Page<IegSchoolPageDto> page, IegSchoolSearchParam param);
+
+    /**
+     * listAll
+     * @param param param
+     * @return List
+     */
+    List<IegSchool> listAll(IegSchoolSearchParam param);
 }

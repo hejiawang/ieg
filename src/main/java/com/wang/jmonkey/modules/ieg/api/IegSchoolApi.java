@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Description: 报考指南——学校基本信息 api
@@ -46,6 +47,16 @@ public class IegSchoolApi extends BaseHttp {
     @GetMapping(value = "/list")
     public HttpPageResult<IegSchoolPageDto> list(Page<IegSchoolPageDto> page, IegSchoolSearchParam param) {
         return new HttpPageResult<>( service.pageList( page, param ) );
+    }
+
+    /**
+     * listAll
+     * @param param param
+     * @return List
+     */
+    @GetMapping(value = "/listAll")
+    public HttpResult<List<IegSchool>> listAll (IegSchoolSearchParam param) {
+        return new HttpResult<>( service.listAll( param ) );
     }
 
     /**

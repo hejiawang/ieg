@@ -36,7 +36,7 @@
         </collection>
         <collection property="schoolList" ofType="com.wang.jmonkey.modules.report.model.entity.ReportStudentSchool">
             <result column="school_id" property="schoolId" />
-            <result column="school_name" property="schoolName" />
+            <result column="school_name_student" property="schoolName" />
         </collection>
     </resultMap>
 
@@ -45,7 +45,7 @@
             s.*, u.real_name as user_name,
             area.area_code as area_code, area.area_name as area_name,
             major.major_name as major_name,
-            school.school_id as school_id, school.school_name as school_name
+            school.school_id as school_id, school.school_name as school_name_student
         FROM report_student s
         left join sys_user u on u.id = s.user_id
         LEFT JOIN report_student_area area ON area.student_id = s.id
@@ -59,7 +59,7 @@
             s.*, u.real_name as user_name,
             area.area_code as area_code, area.area_name as area_name,
             major.major_name as major_name,
-            school.school_id as school_id, school.school_name as school_name
+            school.school_id as school_id, school.school_name as school_name_student
         FROM report_student s
         left join sys_user u on u.id = s.user_id
         LEFT JOIN report_student_area area ON area.student_id = s.id
