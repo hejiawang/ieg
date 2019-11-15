@@ -6,8 +6,8 @@
     <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.report.model.entity.ReportStudentArea">
         <id column="id" property="id" />
         <result column="student_id" property="studentId" />
-        <result column="area_code" property="areaCode" />
-        <result column="area_name" property="areaName" />
+        <result column="area_province" property="areaProvince" />
+        <result column="area_city" property="areaCity" />
 
         <result column="create_date" property="createDate" />
         <result column="create_by" property="createBy" />

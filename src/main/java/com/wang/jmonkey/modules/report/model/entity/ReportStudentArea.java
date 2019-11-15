@@ -32,13 +32,13 @@ public class ReportStudentArea extends BaseEntity<ReportStudentArea> {
      */
     private String studentId;
     /**
-     * 考生意向城市
+     * 院校所在地——省
      */
-    private String areaCode;
+    private String areaProvince;
     /**
-     * 考生意向城市
+     * 院校所在地——市
      */
-    private String areaName;
+    private String areaCity;
 
     @Override
     protected Serializable pkVal() {

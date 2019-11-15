@@ -3,7 +3,7 @@ jmonkey:
     save: false #是否存储日志
     debug: false #是否打印访问接口日志
   redis:
-    host: localhost
+    host: 49.4.54.245
     port: 6379
     database: 10
   datasource:
@@ -11,9 +11,9 @@ jmonkey:
     password: 123456
     url: jdbc:mysql://49.4.54.245:3306/ieg?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&nullCatalogMeansCurrent=true
   static-locations-path: http://localhost:8080/assets/
-  static-locations-file: D:/JMonkeyFile
+  static-locations-file: /mnt/ws/temp/JMonkeyFile
   filePath: /assets
-  fileTempMemory: D:/fileTempMemory
+  fileTempMemory: /mnt/ws/temp/fileTempMemory
   thymeleaf:
     staticPath: http://localhost:8080/lib/ #https://cdn.bootcss.com/
   user:

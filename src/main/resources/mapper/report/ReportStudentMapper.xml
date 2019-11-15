@@ -28,8 +28,8 @@
     <resultMap id="DtoResultMap" type="com.wang.jmonkey.modules.report.model.dto.ReportStudentDto" extends="BaseResultMap">
         <result column="user_name" property="userName" />
         <collection property="areaList" ofType="com.wang.jmonkey.modules.report.model.entity.ReportStudentArea">
-            <result column="area_code" property="areaCode" />
-            <result column="area_name" property="areaName" />
+            <result column="area_province" property="areaProvince" />
+            <result column="area_city" property="areaCity" />
         </collection>
         <collection property="majorList" ofType="com.wang.jmonkey.modules.report.model.entity.ReportStudentMajor">
             <result column="major_name" property="majorName" />
@@ -43,7 +43,7 @@
     <select id="selectDtoById" resultMap="DtoResultMap">
         select
             s.*, u.real_name as user_name,
-            area.area_code as area_code, area.area_name as area_name,
+            area.area_province as area_province, area.area_city as area_city,
             major.major_name as major_name,
             school.school_id as school_id, school.school_name as school_name_student
         FROM report_student s
@@ -57,7 +57,7 @@
     <select id="listPage" resultMap="DtoResultMap">
         select
             s.*, u.real_name as user_name,
-            area.area_code as area_code, area.area_name as area_name,
+            area.area_province as area_province, area.area_city as area_city,
             major.major_name as major_name,
             school.school_id as school_id, school.school_name as school_name_student
         FROM report_student s
@@ -78,7 +78,7 @@
         <if test=" name != '' and name != null">
             AND s.name like '%${name}%'
         </if>
-        order by s.report_date, s.code
+        order by s.report_date desc, s.code
     </select>
 
     <select id="listPageTotal" resultType="java.lang.Long">
