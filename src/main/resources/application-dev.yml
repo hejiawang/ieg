@@ -3,12 +3,12 @@ jmonkey:
     save: false #是否存储日志
     debug: false #是否打印访问接口日志
   redis:
-    host: 49.4.54.245
+    host: localhost
     port: 6379
     database: 10
   datasource:
     username: root
-    password: 123456
+    password: hejiawang521
     url: jdbc:mysql://49.4.54.245:3306/ieg?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&nullCatalogMeansCurrent=true
   static-locations-path: http://localhost:8080/assets/
   static-locations-file: /mnt/ws/temp/JMonkeyFile
@@ -36,3 +36,64 @@ jmonkey:
       environment: ${jmonkey.filePath}/ieg/environment/
     enroll: ${jmonkey.filePath}/ieg/enroll/
     grade: ${jmonkey.filePath}/ieg/school/grade/
+  gauge:
+    icon-path: ${jmonkey.filePath}/gauge/
+    answer-info: # 量表结果目前写死的，对应gauge_answer_info表的id字段
+      action:
+        total-a: gauge_answer_info_action_1
+        total-ac: gauge_answer_info_action_2
+        total-ab: gauge_answer_info_action_3
+        total-b: gauge_answer_info_action_5
+        total-bc: gauge_answer_info_action_4
+        th-max: gauge_answer_info_action_6
+        th-min: gauge_answer_info_action_7
+        ch-max: gauge_answer_info_action_8
+        ch-min: gauge_answer_info_action_9
+        l: gauge_answer_info_action_10
+      quality:
+        d-dz: gauge_answer_info_quality_1
+        d-dx: gauge_answer_info_quality_2
+        d-ny: gauge_answer_info_quality_3
+        d-yy: gauge_answer_info_quality_4
+        y-dz: gauge_answer_info_quality_5
+        y-dx: gauge_answer_info_quality_6
+        y-ny: gauge_answer_info_quality_7
+        y-yy: gauge_answer_info_quality_8
+        dz-dx: gauge_answer_info_quality_9
+        dx-ny: gauge_answer_info_quality_10
+        ny-yy: gauge_answer_info_quality_11
+        dz-yy: gauge_answer_info_quality_12
+        dz-ny: gauge_answer_info_quality_13
+        dx-yy: gauge_answer_info_quality_14
+        dz-dx-ny: gauge_answer_info_quality_15
+        dz-ny-yy: gauge_answer_info_quality_16
+        dz-dx-yy: gauge_answer_info_quality_17
+        dx-ny-yy: gauge_answer_info_quality_18
+        dz-dx-ny-yy: gauge_answer_info_quality_19
+      scl90:
+        xlbjk: gauge_answer_info_scl90_1
+        rjgxmg: gauge_answer_info_scl90_2
+        yy: gauge_answer_info_scl90_3
+        jl: gauge_answer_info_scl90_4
+        dd: gauge_answer_info_scl90_5
+        kb: gauge_answer_info_scl90_6
+        pz: gauge_answer_info_scl90_7
+        jsbx: gauge_answer_info_scl90_8
+        xljk: gauge_answer_info_scl90_10
+        smjysc: gauge_answer_info_scl90_11
+        qtz: gauge_answer_info_scl90_12
+        qpz: gauge_answer_info_scl90_13
+      aks:
+        p1: gauge_answer_info_aks_1
+        p2: gauge_answer_info_aks_2
+        p3: gauge_answer_info_aks_3
+        p4: gauge_answer_info_aks_4
+        n1: gauge_answer_info_aks_5
+        n2: gauge_answer_info_aks_6
+        n3: gauge_answer_info_aks_7
+        n4: gauge_answer_info_aks_8
+        e1: gauge_answer_info_aks_9
+        e2: gauge_answer_info_aks_10
+        e3: gauge_answer_info_aks_11
+        e4: gauge_answer_info_aks_12
+

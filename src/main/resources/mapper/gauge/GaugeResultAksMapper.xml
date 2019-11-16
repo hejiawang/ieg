@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.gauge.mapper.GaugeResultAksMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.gauge.model.entity.GaugeResultAks">
+        <id column="id" property="id" />
+        <result column="record_id" property="recordId" />
+        <result column="p_score" property="pScore" />
+        <result column="p_t_score" property="pTScore" />
+        <result column="p_answer_info_id" property="pAnswerInfoId" />
+        <result column="e_score" property="eScore" />
+        <result column="e_t_score" property="eTScore" />
+        <result column="e_answer_info_id" property="eAnswerInfoId" />
+        <result column="n_score" property="nScore" />
+        <result column="n_t_score" property="nTScore" />
+        <result column="n_answer_info_id" property="nAnswerInfoId" />
+        <result column="l_score" property="lScore" />
+        <result column="l_t_score" property="lTScore" />
+        <result column="result" property="result" />
+
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <select id="selectNewByUserId" resultMap="BaseResultMap">
+        SELECT ra.*
+        FROM gauge_record r
+        LEFT JOIN gauge_result_aks ra ON r.id = ra.record_id
+        WHERE r.delete_flag = 'Used'
+        AND r.user_id = #{userId}
+        AND r.result_type = 'AKS'
+        AND r.start_date = (
+            SELECT MAX(start_date)
+            FROM gauge_record
+            WHERE delete_flag = 'Used'
+            AND result_type = 'AKS'
+            AND user_id = #{userId}
+        )
+    </select>
+
+</mapper>

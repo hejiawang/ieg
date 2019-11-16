@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.gauge.mapper.GaugeResultScl90Mapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.gauge.model.entity.GaugeResultScl90">
+        <id column="id" property="id" />
+
+        <result column="record_id" property="recordId" />
+        <result column="total_score" property="totalScore" />
+        <result column="total_aver_score" property="totalAverScore" />
+        <result column="y_num" property="yNum" />
+        <result column="y_aver_score" property="yAverScore" />
+        <result column="n_num" property="nNum" />
+        <result column="y_answer_info_id" property="yAnswerInfoId" />
+        <result column="quti_score" property="qutiScore" />
+        <result column="quti_aver_score" property="qutiAverScore" />
+        <result column="quti_answer_info_id" property="qutiAnswerInfoId" />
+        <result column="qiangpozheng_score" property="qiangpozhengScore" />
+        <result column="qiangpozheng_aver_score" property="qiangpozhengAverScore" />
+        <result column="qiangpozheng_answer_info_id" property="qiangpozhengAnswerInfoId" />
+        <result column="renjiguanxi_score" property="renjiguanxiScore" />
+        <result column="renjiguanxi_aver_score" property="renjiguanxiAverScore" />
+        <result column="renjiguanxi_answer_info_id" property="renjiguanxiAnswerInfoId" />
+        <result column="yiyu_score" property="yiyuScore" />
+        <result column="yiyu_aver_score" property="yiyuAverScore" />
+        <result column="yiyu_answer_info_id" property="yiyuAnswerInfoId" />
+        <result column="jiaolv_score" property="jiaolvScore" />
+        <result column="jiaolv_aver_score" property="jiaolvAverScore" />
+        <result column="jiaolv_answer_info_id" property="jiaolvAnswerInfoId" />
+        <result column="didui_score" property="diduiScore" />
+        <result column="didui_aver_score" property="diduiAverScore" />
+        <result column="didui_answer_info_id" property="diduiAnswerInfoId" />
+        <result column="kongbu_score" property="kongbuScore" />
+        <result column="kongbu_aver_score" property="kongbuAverScore" />
+        <result column="kongbu_answer_info_id" property="kongbuAnswerInfoId" />
+        <result column="pianzhi_score" property="pianzhiScore" />
+        <result column="pianzhi_aver_score" property="pianzhiAverScore" />
+        <result column="pianzhi_answer_info_id" property="pianzhiAnswerInfoId" />
+        <result column="jingshen_score" property="jingshenScore" />
+        <result column="jingshen_aver_score" property="jingshenAverScore" />
+        <result column="jingshen_answer_info_id" property="jingshenAnswerInfoId" />
+        <result column="qita_score" property="qitaScore" />
+        <result column="qita_aver_score" property="qitaAverScore" />
+        <result column="qita_answer_info_id" property="qitaAnswerInfoId" />
+        <result column="result" property="result" />
+        <result column="result_heart" property="resultHeart" />
+
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <select id="selectNewByUserId" resultMap="BaseResultMap">
+        SELECT ra.*
+        FROM gauge_record r
+        LEFT JOIN gauge_result_scl90 ra ON r.id = ra.record_id
+        WHERE r.delete_flag = 'Used'
+        AND r.user_id = #{userId}
+        AND r.result_type = 'SCL90'
+        AND r.start_date = (
+            SELECT MAX(start_date)
+            FROM gauge_record
+            WHERE delete_flag = 'Used'
+            AND result_type = 'SCL90'
+            AND user_id = #{userId}
+        )
+    </select>
+
+</mapper>

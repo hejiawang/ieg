@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.gauge.mapper.GaugeTopicMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.gauge.model.entity.GaugeTopic">
+        <id column="id" property="id" />
+
+        <result column="gauge_id" property="gaugeId" />
+        <result column="name" property="name" />
+        <result column="sort" property="sort" />
+        <result column="type" property="type" />
+
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.wang.jmonkey.modules.gauge.model.dto.GaugeTopicAnswerDto" extends="BaseResultMap">
+        <collection property="answerList" ofType="com.wang.jmonkey.modules.gauge.model.entity.GaugeAnswer">
+            <id column="answer_id" property="id" />
+            <result column="answer_topic_id" property="topicId" />
+            <result column="answer_name" property="name" />
+            <result column="answer_score" property="score" />
+            <result column="answer_sort" property="sort" />
+        </collection>
+    </resultMap>
+
+    <select id="topicList" resultMap="DtoResultMap">
+        SELECT
+            gt.id as id, gt.gauge_id as gauge_id, gt.name as name, gt.sort as sort, gt.type as type,
+            ga.id as answer_id, ga.topic_id as answer_topic_id, ga.name as answer_name, ga.score as answer_score,
+            ga.sort as answer_sort
+        FROM gauge_topic gt
+        LEFT JOIN gauge_answer ga ON gt.id = ga.topic_id AND ga.delete_flag = 'Used'
+        WHERE gt.delete_flag = 'Used'
+        AND gt.gauge_id = #{gaugeId}
+        ORDER BY gt.sort, ga.sort
+    </select>
+
+</mapper>

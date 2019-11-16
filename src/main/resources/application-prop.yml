@@ -36,3 +36,5 @@ jmonkey:
       environment: ${jmonkey.filePath}/ieg/environment/
     enroll: ${jmonkey.filePath}/ieg/enroll/
     grade: ${jmonkey.filePath}/ieg/school/grade/
+  gauge:
+    icon-path:${jmonkey.filePath}/gauge/

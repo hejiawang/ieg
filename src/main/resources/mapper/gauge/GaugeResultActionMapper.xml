@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.gauge.mapper.GaugeResultActionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.gauge.model.entity.GaugeResultAction">
+        <id column="id" property="id" />
+
+        <result column="record_id" property="recordId" />
+        <result column="total_score" property="totalScore" />
+        <result column="total_answer_info_id" property="totalAnswerInfoId" />
+        <result column="th_score" property="thScore" />
+        <result column="th_answer_info_id" property="thAnswerInfoId" />
+        <result column="ch_score" property="chScore" />
+        <result column="ch_answer_info_id" property="chAnswerInfoId" />
+        <result column="l_score" property="lScore" />
+        <result column="l_answer_info_id" property="lAnswerInfoId" />
+        <result column="result" property="result" />
+
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+
+    <select id="selectNewByUserId" resultMap="BaseResultMap">
+        SELECT ra.*
+        FROM gauge_record r
+        LEFT JOIN gauge_result_action ra ON r.id = ra.record_id
+        WHERE r.delete_flag = 'Used'
+        AND r.user_id = #{userId}
+        AND r.result_type = 'Action'
+        AND r.start_date = (
+            SELECT MAX(start_date)
+            FROM gauge_record
+            WHERE delete_flag = 'Used'
+            AND result_type = 'Action'
+            AND user_id = #{userId}
+        )
+    </select>
+
+</mapper>
