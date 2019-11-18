@@ -68,6 +68,10 @@ public class GaugeResultAction extends BaseEntity<GaugeResultAction> {
      * A型到B型之间的规则解释
      */
     private String result;
+    /**
+     * 专业建议
+     */
+    private String advise;
 
     @Override
     protected Serializable pkVal() {

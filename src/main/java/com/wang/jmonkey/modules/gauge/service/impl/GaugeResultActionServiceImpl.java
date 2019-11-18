@@ -2,7 +2,7 @@ package com.wang.jmonkey.modules.gauge.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeAnswerInfo;
-import com.wang.jmonkey.modules.gauge.model.mo.GaugeResult;
+import com.wang.jmonkey.modules.gauge.model.param.GaugeResult;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeResultAction;
 import com.wang.jmonkey.modules.gauge.mapper.GaugeResultActionMapper;
 import com.wang.jmonkey.modules.gauge.model.enums.GaugeAnswerInfoTypeEnum;
@@ -61,12 +61,12 @@ public class GaugeResultActionServiceImpl extends ServiceImpl<GaugeResultActionM
 
     /**
      * 获取服刑人员最新的测评结果
-     * @param userId userId
+     * @param studentId studentId
      * @return GaugeResultAction
      */
     @Override
-    public GaugeResultAction selectNewByUserId(String userId) {
-        return mapper.selectNewByUserId(userId);
+    public GaugeResultAction selectNewByStudentId(String studentId) {
+        return mapper.selectNewByStudentId(studentId);
     }
 
     /**
@@ -77,9 +77,7 @@ public class GaugeResultActionServiceImpl extends ServiceImpl<GaugeResultActionM
      */
     @Override
     public boolean assess(String gaugeRecordId, List<GaugeResult> gaugeResultList) {
-        Boolean assessResult = false;
-
-        if (CollectionUtil.isEmpty(gaugeResultList)) return assessResult;
+        if (CollectionUtil.isEmpty(gaugeResultList)) return false;
 
         // 1、计算总分、th得分、ch得分、l得分
         int totalScore = 0, thScore = 0, chScore = 0, lScore = 0;
@@ -117,11 +115,9 @@ public class GaugeResultActionServiceImpl extends ServiceImpl<GaugeResultActionM
         // 4、记录规则解释
         Map<String, GaugeAnswerInfo> resultMap = gaugeAnswerInfoService.selectMapByType(GaugeAnswerInfoTypeEnum.Action);
         resultAction.setResult(resultMap.get(totalAnswerInfoId).getDescribe());
+        resultAction.setAdvise(resultMap.get(totalAnswerInfoId).getAdvise());
 
-        assessResult = super.insert(resultAction);
-
-
-        return assessResult;
+        return super.insert(resultAction);
     }
 
     private String assessTotal(int totalScore) {

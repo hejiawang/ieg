@@ -16,8 +16,8 @@ public interface GaugeResultAksMapper extends BaseMapper<GaugeResultAks> {
 
     /**
      * 获取服刑人员最新的测评结果
-     * @param userId userId
+     * @param studentId studentId
      * @return GaugeResultAks
      */
-    GaugeResultAks selectNewByUserId(@Param("userId") String userId);
+    GaugeResultAks selectNewByStudentId(@Param("studentId") String studentId);
 }

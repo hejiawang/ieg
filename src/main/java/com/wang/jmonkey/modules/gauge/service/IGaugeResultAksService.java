@@ -15,10 +15,10 @@ public interface IGaugeResultAksService extends IService<GaugeResultAks> {
 
     /**
      * 获取服刑人员最新的测评结果
-     * @param userId userId
+     * @param studentId studentId
      * @return GaugeResultAks
      */
-    GaugeResultAks selectNewByUserId(String userId);
+    GaugeResultAks selectNewByStudentId(String studentId);
 
     /**
      * selectByRecordId

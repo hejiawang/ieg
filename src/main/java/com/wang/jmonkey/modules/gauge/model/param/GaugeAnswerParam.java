@@ -1,62 +1,64 @@
-package com.wang.jmonkey.modules.gauge.model.entity;
-
-import java.io.Serializable;
-import java.util.Date;
+package com.wang.jmonkey.modules.gauge.model.param;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.wang.jmonkey.common.model.BaseEntity;
-
+import com.wang.jmonkey.modules.gauge.model.entity.GaugeRecord;
 import com.wang.jmonkey.modules.gauge.model.enums.GaugeAnswerInfoTypeEnum;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.beans.BeanUtils;
+
+import java.util.Date;
+import java.util.List;
 
 /**
- * <p>
- * 量表————服刑人员测评记录
- * </p>
- *
- * @author HeJiawang
- * @since 2019-09-26
+ * @Description: 提交答题信息
+ * @Auther: HeJiawang
+ * @Date: 2019/9/25
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class GaugeRecord extends BaseEntity<GaugeRecord> {
-
-    private static final long serialVersionUID = 1L;
+public class GaugeAnswerParam {
 
     /**
-     * 主键ID
-     */
-    private String id;
-    /**
-     * 答题人——服刑人员id
+     * 答题人
      */
     private String studentId;
+
     /**
      * 量表基本信息id 测评的那个量表
      */
     private String gaugeId;
+
     /**
-     * 开始日期
+     * 答题开始时间
      */
     private Date startDate;
+
     /**
-     * 结束日期
+     * 答题结束时间
      */
     private Date endDate;
+
     /**
      * 结果记录表 气质量表Quality 行为量表Action
      */
     @JSONField(serialzeFeatures= SerializerFeature.WriteEnumUsingToString)
     private GaugeAnswerInfoTypeEnum resultType;
 
+    /**
+     * 提交答题信息明细
+     */
+    private List<GaugeResult> resultList;
 
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
+    /**
+     * buildGaugeRecord
+     * @return GaugeRecord
+     */
+    public GaugeRecord buildGaugeRecord() {
+        GaugeRecord record = new GaugeRecord();
+        BeanUtils.copyProperties(this, record);
+
+        return record;
     }
-
 }

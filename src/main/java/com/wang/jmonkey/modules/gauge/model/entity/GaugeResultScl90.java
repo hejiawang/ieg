@@ -186,6 +186,11 @@ public class GaugeResultScl90 extends BaseEntity<GaugeResultScl90> {
      */
     private String resultHeart;
 
+    /**
+     * 专业建议
+     */
+    private String advise;
+
     @Override
     protected Serializable pkVal() {
         return this.id;

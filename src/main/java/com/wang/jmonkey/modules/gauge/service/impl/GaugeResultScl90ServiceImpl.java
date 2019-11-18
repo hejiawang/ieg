@@ -2,7 +2,7 @@ package com.wang.jmonkey.modules.gauge.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeAnswerInfo;
-import com.wang.jmonkey.modules.gauge.model.mo.GaugeResult;
+import com.wang.jmonkey.modules.gauge.model.param.GaugeResult;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeResultScl90;
 import com.wang.jmonkey.modules.gauge.mapper.GaugeResultScl90Mapper;
 import com.wang.jmonkey.modules.gauge.model.enums.GaugeAnswerInfoTypeEnum;
@@ -61,19 +61,17 @@ public class GaugeResultScl90ServiceImpl extends ServiceImpl<GaugeResultScl90Map
 
     /**
      * 获取服刑人员最新的测评结果
-     * @param userId userId
+     * @param studentId studentId
      * @return GaugeResultScl90
      */
     @Override
-    public GaugeResultScl90 selectNewByUserId(String userId) {
-        return mapper.selectNewByUserId(userId);
+    public GaugeResultScl90 selectNewByStudentId(String studentId) {
+        return mapper.selectNewByStudentId(studentId);
     }
 
     @Override
     public boolean assess(String gaugeRecordId, List<GaugeResult> gaugeResultList) {
-        Boolean assessResult = false;
-
-        if (CollectionUtil.isEmpty(gaugeResultList)) return assessResult;
+        if (CollectionUtil.isEmpty(gaugeResultList)) return false;
 
         Map<String, GaugeAnswerInfo> resultMap = gaugeAnswerInfoService.selectMapByType(GaugeAnswerInfoTypeEnum.SCL90);
 
@@ -190,64 +188,75 @@ public class GaugeResultScl90ServiceImpl extends ServiceImpl<GaugeResultScl90Map
                 qiangpozhengAnswerInfoId = "";
 
         String result = StringUtils.EMPTY;
+        String advice = StringUtils.EMPTY;
 
         if (renjiguanxiAverScore >= 2) {
             renjiguanxiAnswerInfoId = AnswerBuilder.rjgxmg;
             result = result + resultMap.get(renjiguanxiAnswerInfoId).getName() + "、";
+            advice = advice + resultMap.get(renjiguanxiAnswerInfoId).getAdvise() + "、";
 
             yAnswerInfoId = AnswerBuilder.xlbjk;
         }
         if (yiyuAverScore >= 2) {
             yiyuAnswerInfoId = AnswerBuilder.yy;
             result = result + resultMap.get(yiyuAnswerInfoId).getName() + "、";
+            advice = advice + resultMap.get(yiyuAnswerInfoId).getAdvise() + "、";
 
             yAnswerInfoId = AnswerBuilder.xlbjk;
         }
         if (jiaolvAverScore >= 2) {
             jiaolvAnswerInfoId = AnswerBuilder.jl;
             result = result + resultMap.get(jiaolvAnswerInfoId).getName() + "、";
+            advice = advice + resultMap.get(jiaolvAnswerInfoId).getAdvise() + "、";
 
             yAnswerInfoId = AnswerBuilder.xlbjk;
         }
         if (diduiAverScore >= 2) {
             diduiAnswerInfoId = AnswerBuilder.dd;
             result = result + resultMap.get(diduiAnswerInfoId).getName() + "、";
+            advice = advice + resultMap.get(diduiAnswerInfoId).getAdvise() + "、";
 
             yAnswerInfoId = AnswerBuilder.xlbjk;
         }
         if (kongbuAverScore >= 2) {
             kongbuAnswerInfoId = AnswerBuilder.kb;
             result = result + resultMap.get(kongbuAnswerInfoId).getName() + "、";
+            advice = advice + resultMap.get(kongbuAnswerInfoId).getAdvise() + "、";
 
             yAnswerInfoId = AnswerBuilder.xlbjk;
         }
         if (pianzhiAverScore >= 2) {
             pianzhiAnswerInfoId = AnswerBuilder.pz;
             result = result + resultMap.get(pianzhiAnswerInfoId).getName() + "、";
+            advice = advice + resultMap.get(pianzhiAnswerInfoId).getAdvise() + "、";
 
             yAnswerInfoId = AnswerBuilder.xlbjk;
         }
         if (jingshenAverScore >= 2) {
             jingshenAnswerInfoId = AnswerBuilder.jsbx;
             result = result + resultMap.get(jingshenAnswerInfoId).getName() + "、";
+            advice = advice + resultMap.get(jingshenAnswerInfoId).getAdvise() + "、";
 
             yAnswerInfoId = AnswerBuilder.xlbjk;
         }
         if (qitaAverScore >= 2) {
             qitaAnswerInfoId = AnswerBuilder.smjysc;
             result = result + resultMap.get(qitaAnswerInfoId).getName() + "、";
+            advice = advice + resultMap.get(qitaAnswerInfoId).getAdvise() + "、";
 
             yAnswerInfoId = AnswerBuilder.xlbjk;
         }
         if (qutiAverScore >= 2) {
             qutiAnswerInfoId = AnswerBuilder.qtz;
             result = result + resultMap.get(qutiAnswerInfoId).getName() + "、";
+            advice = advice + resultMap.get(qutiAnswerInfoId).getAdvise() + "、";
 
             yAnswerInfoId = AnswerBuilder.xlbjk;
         }
         if (qiangpozhengAverScore >= 2) {
             qiangpozhengAnswerInfoId = AnswerBuilder.qpz;
             result = result + resultMap.get(qiangpozhengAnswerInfoId).getName() + "、";
+            advice = advice + resultMap.get(qiangpozhengAnswerInfoId).getAdvise() + "、";
 
             yAnswerInfoId = AnswerBuilder.xlbjk;
         }
@@ -279,14 +288,13 @@ public class GaugeResultScl90ServiceImpl extends ServiceImpl<GaugeResultScl90Map
         if (StringUtils.isNotEmpty(result)) {   // 去掉最后一个顿号
             result = result.substring(0, result.lastIndexOf("、"));
         }
+        if (StringUtils.isNotEmpty(advice)) {
+            advice = advice.substring(0, advice.lastIndexOf("、"));
+        }
         resultScl90.setResultHeart(resultMap.get(yAnswerInfoId).getDescribe())
-                .setResult(result);
+                .setResult(result).setAdvise(advice);
 
-        log.info(resultScl90.toString());
-
-        assessResult = super.insert(resultScl90);
-
-        return assessResult;
+        return super.insert(resultScl90);
     }
 
     /**

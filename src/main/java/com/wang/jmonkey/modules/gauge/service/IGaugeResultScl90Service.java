@@ -15,10 +15,10 @@ public interface IGaugeResultScl90Service extends IService<GaugeResultScl90> {
 
     /**
      * 获取服刑人员最新的测评结果
-     * @param userId userId
+     * @param studentId studentId
      * @return GaugeResultScl90
      */
-    GaugeResultScl90 selectNewByUserId(String userId);
+    GaugeResultScl90 selectNewByStudentId(String studentId);
 
     /**
      * selectByRecordId

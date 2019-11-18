@@ -16,8 +16,8 @@ public interface GaugeResultQualityMapper extends BaseMapper<GaugeResultQuality>
 
     /**
      * 获取服刑人员最新的测评结果
-     * @param userId userId
+     * @param studentId studentId
      * @return GaugeResultQuality
      */
-    GaugeResultQuality selectNewByUserId(@Param("userId") String userId);
+    GaugeResultQuality selectNewByStudentId(@Param("studentId") String studentId);
 }

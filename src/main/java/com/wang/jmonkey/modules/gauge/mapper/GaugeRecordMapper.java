@@ -24,10 +24,4 @@ public interface GaugeRecordMapper extends BaseMapper<GaugeRecord> {
      */
     int countMustNo(@Param("userId") String userId);
 
-    /**
-     * list信息
-     * @param userId userId
-     * @return List<GaugeRecordDto>
-     */
-    List<GaugeRecordDto> selectListByUserId(@Param("userId") String userId);
 }

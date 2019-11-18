@@ -34,12 +34,4 @@
         AND r.id is null
     </select>
 
-    <select id="selectListByUserId" resultMap="DtoResultMap">
-        SELECT gr.*, gi.name as gauge_name, gi.icon_path as icon_path
-        FROM gauge_record gr
-        LEFT JOIN gauge_info gi ON gr.gauge_id = gi.id
-        WHERE gr.delete_flag = 'Used' AND gr.user_id = #{userId}
-        ORDER BY gr.start_date DESC
-    </select>
-
 </mapper>

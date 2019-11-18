@@ -2,7 +2,7 @@ package com.wang.jmonkey.modules.gauge.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeAnswerInfo;
-import com.wang.jmonkey.modules.gauge.model.mo.GaugeResult;
+import com.wang.jmonkey.modules.gauge.model.param.GaugeResult;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeResultQuality;
 import com.wang.jmonkey.modules.gauge.mapper.GaugeResultQualityMapper;
 import com.wang.jmonkey.modules.gauge.model.enums.GaugeAnswerInfoTypeEnum;
@@ -64,12 +64,12 @@ public class GaugeResultQualityServiceImpl extends ServiceImpl<GaugeResultQualit
 
     /**
      * 获取服刑人员最新的测评结果
-     * @param userId userId
+     * @param studentId studentId
      * @return GaugeResultQuality
      */
     @Override
-    public GaugeResultQuality selectNewByUserId(String userId) {
-        return mapper.selectNewByUserId(userId);
+    public GaugeResultQuality selectNewByStudentId(String studentId) {
+        return mapper.selectNewByStudentId(studentId);
     }
 
     /**
@@ -80,9 +80,7 @@ public class GaugeResultQualityServiceImpl extends ServiceImpl<GaugeResultQualit
      */
     @Override
     public boolean assess(String gaugeRecordId, List<GaugeResult> gaugeResultList) {
-        Boolean assessResult = false;
-
-        if (CollectionUtil.isEmpty(gaugeResultList)) return assessResult;
+        if (CollectionUtil.isEmpty(gaugeResultList)) return false;
 
         // 1、计算总分、各个典型性格得分
         int totalScore = 0, nyScore = 0, yyScore = 0, dxScore = 0, dzScore = 0;
@@ -118,10 +116,9 @@ public class GaugeResultQualityServiceImpl extends ServiceImpl<GaugeResultQualit
         // 记录规则解释
         Map<String, GaugeAnswerInfo> resultMap = gaugeAnswerInfoService.selectMapByType(GaugeAnswerInfoTypeEnum.Quality);
         quality.setResult(resultMap.get(answerInfoId).getDescribe());
+        quality.setAdvise(resultMap.get(answerInfoId).getAdvise());
 
-        assessResult = super.insert(quality);
-
-        return assessResult;
+        return super.insert(quality);
     }
 
     /**

@@ -81,6 +81,11 @@ public class GaugeResultAks extends BaseEntity<GaugeResultAks> {
      */
     private String result;
 
+    /**
+     * 专业建议
+     */
+    private String advise;
+
     @Override
     protected Serializable pkVal() {
         return this.id;

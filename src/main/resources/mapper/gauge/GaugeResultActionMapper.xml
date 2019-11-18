@@ -25,19 +25,19 @@
         <result column="delete_flag" property="deleteFlag" />
     </resultMap>
 
-    <select id="selectNewByUserId" resultMap="BaseResultMap">
+    <select id="selectNewByStudentId" resultMap="BaseResultMap">
         SELECT ra.*
         FROM gauge_record r
         LEFT JOIN gauge_result_action ra ON r.id = ra.record_id
         WHERE r.delete_flag = 'Used'
-        AND r.user_id = #{userId}
+        AND r.student_id = #{studentId}
         AND r.result_type = 'Action'
         AND r.start_date = (
             SELECT MAX(start_date)
             FROM gauge_record
             WHERE delete_flag = 'Used'
             AND result_type = 'Action'
-            AND user_id = #{userId}
+            AND student_id = #{studentId}
         )
     </select>
 

@@ -3,6 +3,7 @@ package com.wang.jmonkey.modules.gauge.api;
 import com.wang.jmonkey.common.http.abs.BaseHttp;
 import com.wang.jmonkey.common.http.result.HttpResult;
 import com.wang.jmonkey.modules.gauge.model.dto.GaugeRecordDto;
+import com.wang.jmonkey.modules.gauge.model.dto.GaugeResultDto;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeRecord;
 import com.wang.jmonkey.modules.gauge.service.IGaugeRecordService;
 
@@ -23,16 +24,6 @@ public class GaugeRecordApi extends BaseHttp {
 
     @Resource
     private IGaugeRecordService service;
-
-    /**
-     * list信息
-     * @param record userId
-     * @return List<GaugeRecordDto>
-     */
-    @GetMapping(value = "/list")
-    public HttpResult<List<GaugeRecordDto>> list(GaugeRecord record ) {
-        return new HttpResult<>( service.selectListByUserId( record.getUserId() ) );
-    }
 
     /**
      * 保存实体信息
@@ -72,6 +63,16 @@ public class GaugeRecordApi extends BaseHttp {
     @GetMapping(value = "/find/{id}")
     public HttpResult<GaugeRecord> findById(@PathVariable Serializable id ){
         return new HttpResult<>(service.selectById(id));
+    }
+
+    /**
+     * 获取学生测评结果
+     * @param studentId studentId
+     * @return GaugeResultDto
+     */
+    @GetMapping(value = "/result/{studentId}")
+    public HttpResult<GaugeResultDto> result(@PathVariable String studentId) {
+        return new HttpResult<>(service.result(studentId));
     }
 
 }

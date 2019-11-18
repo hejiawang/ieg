@@ -1,6 +1,7 @@
 package com.wang.jmonkey.modules.gauge.service;
 
 import com.wang.jmonkey.modules.gauge.model.dto.GaugeRecordDto;
+import com.wang.jmonkey.modules.gauge.model.dto.GaugeResultDto;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeRecord;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -24,10 +25,9 @@ public interface IGaugeRecordService extends IService<GaugeRecord> {
     int countMustNo(String userId);
 
     /**
-     * list信息
-     * @param userId userId
-     * @return List<GaugeRecordDto>
+     * 获取学生测评结果
+     * @param studentId studentId
+     * @return GaugeResultDto
      */
-    List<GaugeRecordDto> selectListByUserId(String userId);
-
+    GaugeResultDto result(String studentId);
 }

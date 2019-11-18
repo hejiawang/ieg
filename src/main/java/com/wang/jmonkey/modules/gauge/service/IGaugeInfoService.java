@@ -2,6 +2,7 @@ package com.wang.jmonkey.modules.gauge.service;
 
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeInfo;
 import com.baomidou.mybatisplus.service.IService;
+import com.wang.jmonkey.modules.gauge.model.param.GaugeAnswerParam;
 
 import java.util.List;
 
@@ -20,4 +21,11 @@ public interface IGaugeInfoService extends IService<GaugeInfo> {
      * @return List<GaugeInfo>
      */
     List<GaugeInfo> selectList();
+
+    /**
+     * 量表测评
+     * @param param param
+     * @return Boolean
+     */
+    Boolean handle(GaugeAnswerParam param);
 }

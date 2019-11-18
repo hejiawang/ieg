@@ -1,9 +1,10 @@
 package com.wang.jmonkey.modules.gauge.service.impl;
 
 import com.wang.jmonkey.modules.gauge.model.dto.GaugeRecordDto;
+import com.wang.jmonkey.modules.gauge.model.dto.GaugeResultDto;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeRecord;
 import com.wang.jmonkey.modules.gauge.mapper.GaugeRecordMapper;
-import com.wang.jmonkey.modules.gauge.service.IGaugeRecordService;
+import com.wang.jmonkey.modules.gauge.service.*;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,30 @@ public class GaugeRecordServiceImpl extends ServiceImpl<GaugeRecordMapper, Gauge
     private GaugeRecordMapper mapper;
 
     /**
+     * gaugeResultActionService
+     */
+    @Autowired
+    private IGaugeResultActionService gaugeResultActionService;
+
+    /**
+     * gaugeResultAksService
+     */
+    @Autowired
+    private IGaugeResultAksService gaugeResultAksService;
+
+    /**
+     * gaugeResultQualityService
+     */
+    @Autowired
+    private IGaugeResultQualityService gaugeResultQualityService;
+
+    /**
+     * gaugeResultScl90Service
+     */
+    @Autowired
+    private IGaugeResultScl90Service gaugeResultScl90Service;
+
+    /**
      * 获取未完成测评个数
      * @param userId userId
      * @return int
@@ -38,13 +63,19 @@ public class GaugeRecordServiceImpl extends ServiceImpl<GaugeRecordMapper, Gauge
     }
 
     /**
-     * list信息
-     * @param userId userId
-     * @return List<GaugeRecordDto>
+     * 获取学生测评结果
+     * @param studentId studentId
+     * @return GaugeResultDto
      */
     @Override
-    public List<GaugeRecordDto> selectListByUserId(String userId) {
-        return mapper.selectListByUserId(userId);
-    }
+    public GaugeResultDto result(String studentId) {
+        GaugeResultDto result = new GaugeResultDto();
 
+        result.setAction(gaugeResultActionService.selectNewByStudentId(studentId))
+                .setAks(gaugeResultAksService.selectNewByStudentId(studentId))
+                .setQuality(gaugeResultQualityService.selectNewByStudentId(studentId))
+                .setScl(gaugeResultScl90Service.selectNewByStudentId(studentId));
+
+        return result;
+    }
 }

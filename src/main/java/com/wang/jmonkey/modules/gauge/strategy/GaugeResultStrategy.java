@@ -1,6 +1,6 @@
 package com.wang.jmonkey.modules.gauge.strategy;
 
-import com.wang.jmonkey.modules.gauge.model.mo.GaugeResult;
+import com.wang.jmonkey.modules.gauge.model.param.GaugeResult;
 
 import java.util.List;
 

@@ -16,8 +16,8 @@ public interface GaugeResultScl90Mapper extends BaseMapper<GaugeResultScl90> {
 
     /**
      * 获取服刑人员最新的测评结果
-     * @param userId userId
+     * @param studentId studentId
      * @return GaugeResultScl90
      */
-    GaugeResultScl90 selectNewByUserId(@Param("userId") String userId);
+    GaugeResultScl90 selectNewByStudentId(@Param("studentId") String studentId);
 }

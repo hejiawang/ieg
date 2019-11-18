@@ -15,10 +15,10 @@ public interface IGaugeResultQualityService extends IService<GaugeResultQuality>
 
     /**
      * 获取服刑人员最新的测评结果
-     * @param userId userId
+     * @param studentId studentId
      * @return GaugeResultQuality
      */
-    GaugeResultQuality selectNewByUserId(String userId);
+    GaugeResultQuality selectNewByStudentId(String studentId);
 
     /**
      * selectByRecordId

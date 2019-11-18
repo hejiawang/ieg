@@ -3,6 +3,7 @@ package com.wang.jmonkey.modules.gauge.api;
 import com.wang.jmonkey.common.http.abs.BaseHttp;
 import com.wang.jmonkey.common.http.result.HttpResult;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeInfo;
+import com.wang.jmonkey.modules.gauge.model.param.GaugeAnswerParam;
 import com.wang.jmonkey.modules.gauge.service.IGaugeInfoService;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -68,6 +69,16 @@ public class GaugeInfoApi extends BaseHttp {
     @PostMapping("/uploadIcon")
     public HttpResult<String> uploadImg(@RequestParam(value = "file") MultipartFile uploadFile ){
         return super.uploadFile(uploadFile, imgPath, false);
+    }
+
+    /**
+     * 量表测评
+     * @param param param
+     * @return Boolean
+     */
+    @PostMapping("/handle")
+    public HttpResult<Boolean> handle(@RequestBody GaugeAnswerParam param) {
+        return new HttpResult<>(service.handle(param));
     }
 
 }

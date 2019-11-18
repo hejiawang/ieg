@@ -3,7 +3,7 @@ package com.wang.jmonkey.modules.gauge.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.wang.jmonkey.common.model.enums.SexEnum;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeAnswerInfo;
-import com.wang.jmonkey.modules.gauge.model.mo.GaugeResult;
+import com.wang.jmonkey.modules.gauge.model.param.GaugeResult;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeResultAks;
 import com.wang.jmonkey.modules.gauge.mapper.GaugeResultAksMapper;
 import com.wang.jmonkey.modules.gauge.model.enums.GaugeAnswerInfoTypeEnum;
@@ -13,6 +13,8 @@ import com.wang.jmonkey.modules.gauge.service.IGaugeResultAksService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.wang.jmonkey.modules.gauge.strategy.GaugeResultStrategy;
 import com.wang.jmonkey.modules.gauge.utils.GaugeResultUtil;
+import com.wang.jmonkey.modules.report.model.entity.ReportStudent;
+import com.wang.jmonkey.modules.report.service.IReportStudentService;
 import com.wang.jmonkey.modules.sys.model.entity.SysUser;
 import com.wang.jmonkey.modules.sys.service.ISysUserService;
 import com.xiaoleilu.hutool.collection.CollectionUtil;
@@ -48,10 +50,10 @@ public class GaugeResultAksServiceImpl extends ServiceImpl<GaugeResultAksMapper,
     private IGaugeRecordService gaugeRecordService;
 
     /**
-     * sysUserService
+     * reportStudentService
      */
     @Autowired
-    private ISysUserService sysUserService;
+    private IReportStudentService reportStudentService;
 
     /**
      * gaugeAnswerInfoService
@@ -81,12 +83,12 @@ public class GaugeResultAksServiceImpl extends ServiceImpl<GaugeResultAksMapper,
 
     /**
      * 获取服刑人员最新的测评结果
-     * @param userId userId
+     * @param studentId studentId
      * @return GaugeResultAks
      */
     @Override
-    public GaugeResultAks selectNewByUserId(String userId) {
-        return mapper.selectNewByUserId(userId);
+    public GaugeResultAks selectNewByStudentId(String studentId) {
+        return mapper.selectNewByStudentId(studentId);
     }
 
     /**
@@ -97,16 +99,14 @@ public class GaugeResultAksServiceImpl extends ServiceImpl<GaugeResultAksMapper,
      */
     @Override
     public boolean assess(String gaugeRecordId, List<GaugeResult> gaugeResultList) {
-        Boolean assessResult = false;
+        if (CollectionUtil.isEmpty(gaugeResultList)) return false;
 
-        if (CollectionUtil.isEmpty(gaugeResultList)) return assessResult;
+        String studentId = gaugeRecordService.selectById(gaugeRecordId).getStudentId();
+        ReportStudent student = reportStudentService.selectById(studentId);
 
-        String userId = gaugeRecordService.selectById(gaugeRecordId).getUserId();
-        SysUser user = sysUserService.selectById(userId);
-
-        int age = DateUtil.year(new Date()) - DateUtil.year(user.getBirthday()) + 1;
+        int age = DateUtil.year(new Date()) - DateUtil.year(student.getBirthday()) + 1;
         String ageD = GaugeResultUtil.renderAge(age);
-        SexEnum sex = user.getSex();
+        SexEnum sex = student.getSex();
 
         int pScore = 0, eScore = 0, nScore = 0, lScore = 0;
         for (GaugeResult result : gaugeResultList) {
@@ -152,10 +152,13 @@ public class GaugeResultAksServiceImpl extends ServiceImpl<GaugeResultAksMapper,
                         + resultMap.get(eAnswerInfoId).getDescribe() + "\n\r"
                         + resultMap.get(nAnswerInfoId).getDescribe() + "\n\r"
         );
+        aks.setAdvise(
+                resultMap.get(pAnswerInfoId).getAdvise() + "\n\r"
+                + resultMap.get(eAnswerInfoId).getAdvise() + "\n\r"
+                + resultMap.get(nAnswerInfoId).getAdvise() + "\n\r"
+        );
 
-        assessResult = super.insert(aks);
-
-        return assessResult;
+        return super.insert(aks);
     }
 
     private String builderPAnswerInfoId(Integer score) {
