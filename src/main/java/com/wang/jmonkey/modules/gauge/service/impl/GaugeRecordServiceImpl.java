@@ -1,6 +1,5 @@
 package com.wang.jmonkey.modules.gauge.service.impl;
 
-import com.wang.jmonkey.modules.gauge.model.dto.GaugeRecordDto;
 import com.wang.jmonkey.modules.gauge.model.dto.GaugeResultDto;
 import com.wang.jmonkey.modules.gauge.model.entity.GaugeRecord;
 import com.wang.jmonkey.modules.gauge.mapper.GaugeRecordMapper;
@@ -8,8 +7,6 @@ import com.wang.jmonkey.modules.gauge.service.*;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * <p>
