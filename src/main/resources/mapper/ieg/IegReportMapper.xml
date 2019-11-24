@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.jmonkey.modules.ieg.mapper.IegReportMapper">
+
+    <resultMap id="BaseResultMap" type="com.wang.jmonkey.modules.ieg.model.dto.IegReportListDto">
+        <result column="schoolId" property="schoolId" />
+        <result column="logo" property="logo" />
+        <result column="name" property="name" />
+        <result column="des" property="describe" />
+        <result column="areaProvince" property="areaProvince" />
+        <result column="areaCity" property="areaCity" />
+        <result column="areaArea" property="areaArea" />
+        <result column="areaDetail" property="areaDetail" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT
+            school.id as schoolId,
+            school.logo as logo,
+            school.name as name,
+            detail.describe as des,
+            school.area_province as areaProvince,
+            school.area_city as areaCity,
+            school.area_area as areaArea,
+            school.area_detail as areaDetail,
+            (
+                select min(ei.score_min)
+                from ieg_enroll e
+                left join ieg_enroll_info ei on e.id = ei.enroll_id
+                where ei.delete_flag = 'Used'
+                and ei.school_name = school.name
+            ) as min_score
+        FROM ieg_school school
+        left join ieg_school_detail  detail on school.id = detail.school_id
+        order by min_score desc
+        LIMIT ${limitStart}, ${size}
+    </select>
+
+    <select id="listTotal" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM ieg_school school
+    </select>
+
+    <select id="feaMajorList" resultType="java.lang.String">
+        select m.name
+        from ieg_school_major m
+        left join ieg_school_major_features mf on m.id = mf.school_major_id
+        where m.delete_flag = 'Used'
+        and m.school_id = #{schoolId}
+        and mf.id is not null
+        group by m.name
+    </select>
+
+    <select id="maxMajorList" resultType="java.lang.String">
+        select m.name
+        from ieg_school_major m
+        left join ieg_school_major_enroll_record mer on m.id = mer.school_major_id
+        where m.delete_flag = 'Used'
+        and m.school_id = #{schoolId}
+        and mer.year = (
+            select max(mer.year)
+            from ieg_school_major m
+            left join ieg_school_major_enroll_record mer on m.id = mer.school_major_id
+            where m.delete_flag = 'Used'
+            and m.school_id = #{schoolId}
+        )
+        order by score_min desc
+        limit 0, 5
+    </select>
+
+</mapper>
