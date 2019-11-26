@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -51,6 +52,18 @@ public class IegReportApi extends BaseHttp {
         param.setAreaArea(
                 CollectionUtil.isNotEmpty(areaList) && areaList.size() > 2 ? areaList.get(2) : StringUtils.EMPTY
         );
+
+        if (StringUtils.isNotEmpty(param.getName())) {
+            param.setNameList(
+                    Arrays.asList(param.getName().split(" "))
+            );
+        }
+
+        if (StringUtils.isNotEmpty(param.getMajor())) {
+            param.setMajorList(
+                    Arrays.asList(param.getMajor().split(" "))
+            );
+        }
 
         return new HttpPageResult<>(service.list(param));
     }

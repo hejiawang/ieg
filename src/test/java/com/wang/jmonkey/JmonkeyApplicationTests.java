@@ -7,17 +7,18 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class JmonkeyApplicationTests {
 
     @Test
     public void contextLoads() {
-        List<String> areaList = CollectionUtil.newArrayList();
+        String name = "";
 
-        String p = CollectionUtil.isNotEmpty(areaList) && areaList.size() > 0 ? areaList.get(0) : StringUtils.EMPTY;
+        List<String> nameList = Arrays.asList(name.split(" "));
 
-        System.out.println(p);
+        System.out.println(nameList.size());
 
     }
 

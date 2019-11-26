@@ -22,14 +22,7 @@
             school.area_province as areaProvince,
             school.area_city as areaCity,
             school.area_area as areaArea,
-            school.area_detail as areaDetail,
-            (
-                select min(ei.score_min)
-                from ieg_enroll e
-                left join ieg_enroll_info ei on e.id = ei.enroll_id
-                where ei.delete_flag = 'Used'
-                and ei.school_name = school.name
-            ) as min_score
+            school.area_detail as areaDetail
         FROM ieg_school school
         left join ieg_school_detail  detail on school.id = detail.school_id
         where school.delete_flag = 'Used'
@@ -42,7 +35,23 @@
         <if test=" areaArea != '' and areaArea != null">
             AND school.area_area = #{areaArea}
         </if>
-        order by min_score desc
+        <if test="nameList != null and nameList.size() > 0">
+            AND
+            <foreach collection="nameList" index="index" item="item" open="(" separator="or" close=")">
+                school.name like '%${item}%'
+            </foreach>
+        </if>
+        <if test="majorList != null and majorList.size() > 0">
+            and school.id in (
+                select school_id
+                FROM ieg_school_major
+                WHERE delete_flag = 'Used'
+                and
+                <foreach collection="majorList" index="index" item="item" open="(" separator="or" close=")">
+                    name like '%${item}%'
+                </foreach>
+            )
+        </if>
         LIMIT ${limitStart}, ${size}
     </select>
 
@@ -58,6 +67,23 @@
         </if>
         <if test=" areaArea != '' and areaArea != null">
             AND school.area_area = #{areaArea}
+        </if>
+        <if test="nameList != null and nameList.size() > 0">
+            AND
+            <foreach collection="nameList" index="index" item="item" open="(" separator="or" close=")">
+                school.name like '%${item}%'
+            </foreach>
+        </if>
+        <if test="majorList != null and majorList.size() > 0">
+            and school.id in (
+            select school_id
+            FROM ieg_school_major
+            WHERE delete_flag = 'Used'
+            and
+            <foreach collection="majorList" index="index" item="item" open="(" separator="or" close=")">
+               name like '%${item}%'
+            </foreach>
+            )
         </if>
     </select>
 

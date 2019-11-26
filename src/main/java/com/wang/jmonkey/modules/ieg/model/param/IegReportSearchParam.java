@@ -16,10 +16,13 @@ public class IegReportSearchParam {
      * 专业名称 使用空格分割
      */
     private String major;
+    private List<String> majorList;
+
     /**
      * 院校名称 使用空格分割
      */
     private String name;
+    private List<String> nameList;
     /**
      * 所在地区 省 市 区
      */
