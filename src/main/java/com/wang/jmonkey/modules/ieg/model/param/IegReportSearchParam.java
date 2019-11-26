@@ -24,6 +24,18 @@ public class IegReportSearchParam {
      * 所在地区 省 市 区
      */
     private List<String> area;
+    /**
+     * 院校所在地——省
+     */
+    private String areaProvince;
+    /**
+     * 院校所在地——市
+     */
+    private String areaCity;
+    /**
+     * 院校所在地——区
+     */
+    private String areaArea;
 
     private Integer current;
     private Integer size;

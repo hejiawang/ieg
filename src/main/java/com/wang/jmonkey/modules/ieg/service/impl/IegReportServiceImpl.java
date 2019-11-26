@@ -49,10 +49,13 @@ public class IegReportServiceImpl implements IIegReportService {
                 iegSchoolFeaturesService.selectFeatureNames(report.getSchoolId())
             );
 
+            /*
             List<String> feaMajorList = mapper.feaMajorList(report.getSchoolId());
             if (CollectionUtil.isEmpty(feaMajorList)) {
                 feaMajorList = mapper.maxMajorList(report.getSchoolId());
             }
+            */
+            List<String> feaMajorList = mapper.maxMajorList(report.getSchoolId());
 
             report.setMajorNames(feaMajorList);
         });

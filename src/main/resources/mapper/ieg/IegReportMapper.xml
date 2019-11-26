@@ -32,6 +32,16 @@
             ) as min_score
         FROM ieg_school school
         left join ieg_school_detail  detail on school.id = detail.school_id
+        where school.delete_flag = 'Used'
+        <if test=" areaProvince != '' and areaProvince != null">
+            AND school.area_province = #{areaProvince}
+        </if>
+        <if test=" areaCity != '' and areaCity != null">
+            AND school.area_city = #{areaCity}
+        </if>
+        <if test=" areaArea != '' and areaArea != null">
+            AND school.area_area = #{areaArea}
+        </if>
         order by min_score desc
         LIMIT ${limitStart}, ${size}
     </select>
@@ -39,6 +49,16 @@
     <select id="listTotal" resultType="java.lang.Long">
         SELECT count(1)
         FROM ieg_school school
+        where school.delete_flag = 'Used'
+        <if test=" areaProvince != '' and areaProvince != null">
+            AND school.area_province = #{areaProvince}
+        </if>
+        <if test=" areaCity != '' and areaCity != null">
+            AND school.area_city = #{areaCity}
+        </if>
+        <if test=" areaArea != '' and areaArea != null">
+            AND school.area_area = #{areaArea}
+        </if>
     </select>
 
     <select id="feaMajorList" resultType="java.lang.String">
@@ -52,19 +72,11 @@
     </select>
 
     <select id="maxMajorList" resultType="java.lang.String">
-        select m.name
+        select m.name, mer.year, mer.score_min
         from ieg_school_major m
-        left join ieg_school_major_enroll_record mer on m.id = mer.school_major_id
-        where m.delete_flag = 'Used'
-        and m.school_id = #{schoolId}
-        and mer.year = (
-            select max(mer.year)
-            from ieg_school_major m
-            left join ieg_school_major_enroll_record mer on m.id = mer.school_major_id
-            where m.delete_flag = 'Used'
-            and m.school_id = #{schoolId}
-        )
-        order by score_min desc
+        LEFT join ieg_school_major_enroll_record mer on m.id = mer.school_major_id
+        where m.school_id = #{schoolId}
+        order by mer.year desc, mer.score_min desc
         limit 0, 5
     </select>
 
