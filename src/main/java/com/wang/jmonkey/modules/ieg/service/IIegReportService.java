@@ -1,6 +1,7 @@
 package com.wang.jmonkey.modules.ieg.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.wang.jmonkey.modules.ieg.model.dto.IegReportDetailDto;
 import com.wang.jmonkey.modules.ieg.model.dto.IegReportListDto;
 import com.wang.jmonkey.modules.ieg.model.param.IegReportSearchParam;
 
@@ -20,4 +21,11 @@ public interface IIegReportService {
      * @return IegReportListDto
      */
     Page<IegReportListDto> list(IegReportSearchParam param);
+
+    /**
+     * 院校详细信息
+     * @param schoolId 院校id
+     * @return 院校详细信息
+     */
+    IegReportDetailDto detail(String schoolId);
 }

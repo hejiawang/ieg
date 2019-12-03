@@ -3,17 +3,16 @@ package com.wang.jmonkey.modules.ieg.api;
 import com.wang.jmonkey.common.http.abs.BaseHttp;
 import com.wang.jmonkey.common.http.result.HttpPageResult;
 import com.wang.jmonkey.common.http.result.HttpResult;
+import com.wang.jmonkey.modules.ieg.model.dto.IegReportDetailDto;
 import com.wang.jmonkey.modules.ieg.model.dto.IegReportListDto;
 import com.wang.jmonkey.modules.ieg.model.param.IegReportSearchParam;
 import com.wang.jmonkey.modules.ieg.service.IIegReportService;
 import com.xiaoleilu.hutool.collection.CollectionUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,6 +65,16 @@ public class IegReportApi extends BaseHttp {
         }
 
         return new HttpPageResult<>(service.list(param));
+    }
+
+    /**
+     * 院校详细信息
+     * @param schoolId 院校id
+     * @return 院校详细信息
+     */
+    @GetMapping(value = "/detail/{schoolId}")
+    public HttpResult<IegReportDetailDto> detail(@PathVariable String schoolId) {
+        return new HttpResult<>(service.detail(schoolId));
     }
 
 }

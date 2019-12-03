@@ -2,6 +2,7 @@ package com.wang.jmonkey.modules.ieg.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolDto;
+import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolInfoDto;
 import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolPageDto;
 import com.wang.jmonkey.modules.ieg.model.entity.IegSchool;
 import com.baomidou.mybatisplus.service.IService;
@@ -56,4 +57,11 @@ public interface IIegSchoolService extends IService<IegSchool> {
      * @return List
      */
     List<IegSchool> listAll(IegSchoolSearchParam param);
+
+    /**
+     * findInfoDtoById
+     * @param id schoolId
+     * @return IegSchoolInfoDto
+     */
+    IegSchoolInfoDto findInfoDtoById(String id);
 }

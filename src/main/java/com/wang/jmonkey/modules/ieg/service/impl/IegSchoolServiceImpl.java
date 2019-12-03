@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolDto;
+import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolInfoDto;
 import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolPageDto;
 import com.wang.jmonkey.modules.ieg.model.entity.IegSchool;
 import com.wang.jmonkey.modules.ieg.mapper.IegSchoolMapper;
@@ -127,5 +128,15 @@ public class IegSchoolServiceImpl extends ServiceImpl<IegSchoolMapper, IegSchool
         wrapper.orderBy("sort");
 
         return super.selectList(wrapper);
+    }
+
+    /**
+     * findInfoDtoById
+     * @param id schoolId
+     * @return IegSchoolInfoDto
+     */
+    @Override
+    public IegSchoolInfoDto findInfoDtoById(String id) {
+        return mapper.findInfoDtoById(id);
     }
 }

@@ -54,6 +54,11 @@
         <result column="majorTypeName" property="majorTypeName" />
     </resultMap>
 
+    <resultMap id="InfoDtoResultMap" type="com.wang.jmonkey.modules.ieg.model.dto.IegSchoolInfoDto" extends="BaseResultMap">
+        <result column="attachTypeName" property="attachTypeName" />
+        <result column="majorTypeName" property="majorTypeName" />
+    </resultMap>
+
     <select id="findDtoById" resultMap="DtoResultMap">
         select s.*,
             sd.`describe` as detail_describe,
@@ -97,6 +102,14 @@
               select school_id from ieg_auth where user_id = #{userId}
             )
         </if>
+    </select>
+
+    <select id="findInfoDtoById" resultMap="InfoDtoResultMap">
+        SELECT s.*, attach.lable as attachTypeName, major.lable as majorTypeName
+        FROM ieg_school s
+        LEFT JOIN sys_dict attach ON attach.`value` = s.attach_type AND attach.delete_flag = 'Used'
+        LEFT JOIN sys_dict major on major.`value` = s.major_type AND major.delete_flag = 'Used'
+        where s.id = #{id}
     </select>
 
 </mapper>

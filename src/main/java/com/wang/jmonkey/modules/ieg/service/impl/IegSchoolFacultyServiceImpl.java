@@ -33,4 +33,18 @@ public class IegSchoolFacultyServiceImpl extends ServiceImpl<IegSchoolFacultyMap
 
         return super.selectList(wrapper);
     }
+
+    /**
+     * selectBySchoolId
+     * @param schoolId schoolId
+     * @return IegSchoolFaculty
+     */
+    @Override
+    public List<IegSchoolFaculty> selectBySchoolId(String schoolId) {
+        EntityWrapper<IegSchoolFaculty> wrapper = new EntityWrapper<>();
+        wrapper.setEntity(new IegSchoolFaculty().setSchoolId(schoolId));
+        wrapper.orderBy( "sort" );
+
+        return super.selectList(wrapper);
+    }
 }

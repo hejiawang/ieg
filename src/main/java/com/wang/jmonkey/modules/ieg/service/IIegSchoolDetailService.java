@@ -19,4 +19,11 @@ public interface IIegSchoolDetailService extends IService<IegSchoolDetail> {
      * @return true
      */
     boolean merge(IegSchoolDetail schoolDetail);
+
+    /**
+     * selectBySchoolId
+     * @param schoolId schoolId
+     * @return IegSchoolDetail
+     */
+    IegSchoolDetail selectBySchoolId(String schoolId);
 }

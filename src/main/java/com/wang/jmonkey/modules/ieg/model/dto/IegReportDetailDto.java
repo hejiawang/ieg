@@ -21,7 +21,7 @@ public class IegReportDetailDto {
     /**
      * 院校基本信息
      */
-    private IegSchool school;
+    private IegSchoolInfoDto school;
 
     /**
      * 院校详细信息

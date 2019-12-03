@@ -34,4 +34,14 @@ public class IegSchoolDetailServiceImpl extends ServiceImpl<IegSchoolDetailMappe
         return mapper.deleteBySchool(schoolDetail.getSchoolId()) >= 0
                 && super.insert(schoolDetail);
     }
+
+    /**
+     * selectBySchoolId
+     * @param schoolId schoolId
+     * @return IegSchoolDetail
+     */
+    @Override
+    public IegSchoolDetail selectBySchoolId(String schoolId) {
+        return mapper.selectBySchoolId(schoolId);
+    }
 }

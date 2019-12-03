@@ -20,4 +20,11 @@ public interface IegSchoolDetailMapper extends BaseMapper<IegSchoolDetail> {
      * @return int
      */
     int deleteBySchool(@Param("schoolId") String schoolId);
+
+    /**
+     * selectBySchoolId
+     * @param schoolId schoolId
+     * @return IegSchoolDetail
+     */
+    IegSchoolDetail selectBySchoolId(@Param("schoolId") String schoolId);
 }

@@ -2,11 +2,12 @@ package com.wang.jmonkey.modules.ieg.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wang.jmonkey.modules.ieg.mapper.IegReportMapper;
+import com.wang.jmonkey.modules.ieg.model.dto.IegReportDetailDto;
 import com.wang.jmonkey.modules.ieg.model.dto.IegReportListDto;
+import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolInfoDto;
+import com.wang.jmonkey.modules.ieg.model.entity.IegEnvironment;
 import com.wang.jmonkey.modules.ieg.model.param.IegReportSearchParam;
-import com.wang.jmonkey.modules.ieg.service.IIegReportService;
-import com.wang.jmonkey.modules.ieg.service.IIegSchoolFeaturesService;
-import com.xiaoleilu.hutool.collection.CollectionUtil;
+import com.wang.jmonkey.modules.ieg.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,36 @@ public class IegReportServiceImpl implements IIegReportService {
      */
     @Autowired
     private IIegSchoolFeaturesService iegSchoolFeaturesService;
+
+    /**
+     * iegSchoolService
+     */
+    @Autowired
+    private IIegSchoolService iegSchoolService;
+
+    /**
+     * iegSchoolDetailService
+     */
+    @Autowired
+    private IIegSchoolDetailService iegSchoolDetailService;
+
+    /**
+     * iegEnvironmentService
+     */
+    @Autowired
+    private IIegEnvironmentService iegEnvironmentService;
+
+    /**
+     * iegSchoolProblemService
+     */
+    @Autowired
+    private IIegSchoolProblemService iegSchoolProblemService;
+
+    /**
+     * iegSchoolFacultyService
+     */
+    @Autowired
+    private IIegSchoolFacultyService iegSchoolFacultyService;
 
     /**
      * 检索页面 list数据
@@ -67,5 +98,34 @@ public class IegReportServiceImpl implements IIegReportService {
                 .setSize(param.getSize());
 
         return pageResult;
+    }
+
+    /**
+     * 院校详细信息
+     * @param schoolId 院校id
+     * @return 院校详细信息
+     */
+    @Override
+    public IegReportDetailDto detail(String schoolId) {
+        IegReportDetailDto result = new IegReportDetailDto();
+
+        IegSchoolInfoDto school = iegSchoolService.findInfoDtoById(schoolId);
+        IegEnvironment environment = iegEnvironmentService.findByAreaCity(school.getAreaCity());
+
+        result.setSchool(
+                school
+        ).setSchoolDetail(
+                iegSchoolDetailService.selectBySchoolId(schoolId)
+        ).setFeatureList(
+                iegSchoolFeaturesService.selectFeatureNames(schoolId)
+        ).setEnvironment(
+                environment == null ? "" : environment.getDescribe()
+        ).setProblemList(
+                iegSchoolProblemService.selectBySchoolId(schoolId)
+        ).setFacultyList(
+                iegSchoolFacultyService.selectBySchoolId(schoolId)
+        );
+
+        return result;
     }
 }

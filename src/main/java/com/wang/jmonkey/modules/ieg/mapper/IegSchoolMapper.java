@@ -1,6 +1,7 @@
 package com.wang.jmonkey.modules.ieg.mapper;
 
 import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolDto;
+import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolInfoDto;
 import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolPageDto;
 import com.wang.jmonkey.modules.ieg.model.entity.IegSchool;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
@@ -43,4 +44,11 @@ public interface IegSchoolMapper extends BaseMapper<IegSchool> {
      * @return long
      */
     long pageCount(IegSchoolSearchParam param);
+
+    /**
+     * findInfoDtoById
+     * @param id schoolId
+     * @return IegSchoolInfoDto
+     */
+    IegSchoolInfoDto findInfoDtoById(@Param("id") String id);
 }

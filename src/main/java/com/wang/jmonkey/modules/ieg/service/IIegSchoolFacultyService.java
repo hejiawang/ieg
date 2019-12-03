@@ -21,4 +21,11 @@ public interface IIegSchoolFacultyService extends IService<IegSchoolFaculty> {
      * @return 院系信息
      */
     List<IegSchoolFaculty> selectBySchool(IegSchoolFaculty faculty);
+
+    /**
+     * selectBySchoolId
+     * @param schoolId schoolId
+     * @return IegSchoolFaculty
+     */
+    List<IegSchoolFaculty> selectBySchoolId(String schoolId);
 }

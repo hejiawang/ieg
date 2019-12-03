@@ -33,4 +33,18 @@ public class IegSchoolProblemServiceImpl extends ServiceImpl<IegSchoolProblemMap
 
         return super.selectList(wrapper);
     }
+
+    /**
+     * selectBySchoolId
+     * @param schoolId schoolId
+     * @return IegSchoolProblem
+     */
+    @Override
+    public List<IegSchoolProblem> selectBySchoolId(String schoolId) {
+        EntityWrapper<IegSchoolProblem> wrapper = new EntityWrapper<>();
+        wrapper.setEntity(new IegSchoolProblem().setSchoolId(schoolId));
+        wrapper.orderBy( "create_date", false );
+
+        return super.selectList(wrapper);
+    }
 }

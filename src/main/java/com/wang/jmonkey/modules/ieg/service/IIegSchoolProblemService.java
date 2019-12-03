@@ -21,4 +21,11 @@ public interface IIegSchoolProblemService extends IService<IegSchoolProblem> {
      * @return List<IegSchoolProblem>
      */
     List<IegSchoolProblem> selectBySchool(IegSchoolProblem problem);
+
+    /**
+     * selectBySchoolId
+     * @param schoolId schoolId
+     * @return IegSchoolProblem
+     */
+    List<IegSchoolProblem> selectBySchoolId(String schoolId);
 }

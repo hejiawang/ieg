@@ -26,4 +26,11 @@
         DELETE FROM ieg_school_detail WHERE school_id = #{schoolId}
     </delete>
 
+    <select id="selectBySchoolId" resultMap="BaseResultMap">
+        select *
+        from ieg_school_detail
+        WHERE school_id = #{schoolId}
+        and delete_flag = 'Used'
+    </select>
+
 </mapper>
