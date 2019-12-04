@@ -124,6 +124,8 @@ public class IegReportServiceImpl implements IIegReportService {
                 iegSchoolProblemService.selectBySchoolId(schoolId)
         ).setFacultyList(
                 iegSchoolFacultyService.selectBySchoolId(schoolId)
+        ).setMajorList(
+                mapper.selectMajorBySchoolId(schoolId)
         );
 
         return result;

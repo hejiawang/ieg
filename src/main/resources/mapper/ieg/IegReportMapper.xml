@@ -13,6 +13,52 @@
         <result column="areaDetail" property="areaDetail" />
     </resultMap>
 
+    <resultMap id="MajorDto" type="com.wang.jmonkey.modules.ieg.model.dto.IegReportMajorDto">
+        <id column="id" property="id" />
+        <result column="major_two_id" property="majorTwoId" />
+        <result column="school_id" property="schoolId" />
+        <result column="faculty_id" property="facultyId" />
+        <result column="submit_id" property="submitId" />
+        <result column="name" property="name" />
+        <result column="code" property="code" />
+        <result column="degree_type" property="degreeType" />
+        <result column="course_type" property="courseType" />
+        <result column="sort" property="sort" />
+        <result column="describe" property="describe" />
+        <result column="work_direction" property="workDirection" />
+        <result column="course" property="course" />
+        <result column="student_scope" property="studentScope" />
+        <result column="money" property="money" />
+        <result column="study_length" property="studyLength" />
+        <result column="ratio_sex_man" property="ratioSexMan" />
+        <result column="ratio_sex_woman" property="ratioSexWoman" />
+        <result column="ratio_course_arts" property="ratioCourseArts" />
+        <result column="ratio_course_sci" property="ratioCourseSci" />
+        <result column="ratio_assess_whole" property="ratioAssessWhole" />
+        <result column="ratio_assess_work" property="ratioAssessWork" />
+        <result column="ratio_assess_study" property="ratioAssessStudy" />
+        <result column="ratio_assess_shool" property="ratioAssessShool" />
+        <result column="ratio_assess_difficulty" property="ratioAssessDifficulty" />
+        <result column="create_date" property="createDate" />
+        <result column="create_by" property="createBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="delete_flag" property="deleteFlag" />
+
+        <result column="majorTwoName" property="majorTwoName" />
+        <result column="facultyName" property="facultyName" />
+
+        <collection property="featureNames" ofType="java.lang.String">
+            <result column="feature_name"/>
+        </collection>
+
+        <collection property="problemList" ofType="com.wang.jmonkey.modules.ieg.model.entity.IegSchoolMajorProblem">
+            <result column="problem_answer" property="answer" />
+            <result column="problem_problem" property="problem" />
+        </collection>
+    </resultMap>
+
     <select id="list" resultMap="BaseResultMap">
         SELECT
             school.id as schoolId,
@@ -104,6 +150,21 @@
         where m.school_id = #{schoolId}
         order by mer.year desc, mer.score_min desc
         limit 0, 5
+    </select>
+
+    <select id="selectMajorBySchoolId" resultMap="MajorDto">
+        select
+            sm.*,
+            m.name as majorTwoName, sf.name as facultyName,
+            smfd.lable as feature_name,
+            smp.answer as problem_answer, smp.problem as problem_problem
+        FROM ieg_school_major sm
+        LEFT JOIN ieg_major m ON sm.major_two_id = m.id
+        LEFT JOIN ieg_school_faculty sf ON sm.faculty_id = sf.id
+        LEFT JOIN ieg_school_major_features smf ON sm.id = smf.school_major_id
+        LEFT JOIN sys_dict smfd ON smf.type = smfd.value
+        LEFT JOIN ieg_school_major_problem smp ON smp.school_major_id = sm.id
+        WHERE sm.school_id = #{schoolId}
     </select>
 
 </mapper>

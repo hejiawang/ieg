@@ -1,6 +1,7 @@
 package com.wang.jmonkey.modules.ieg.mapper;
 
 import com.wang.jmonkey.modules.ieg.model.dto.IegReportListDto;
+import com.wang.jmonkey.modules.ieg.model.dto.IegReportMajorDto;
 import com.wang.jmonkey.modules.ieg.model.param.IegReportSearchParam;
 import org.apache.ibatis.annotations.Param;
 
@@ -43,4 +44,11 @@ public interface IegReportMapper {
      * @return 5个专业名称
      */
     List<String> maxMajorList(@Param("schoolId") String schoolId);
+
+    /**
+     * selectMajorBySchoolId
+     * @param schoolId schoolId
+     * @return IegReportMajorDto
+     */
+    List<IegReportMajorDto> selectMajorBySchoolId(@Param("schoolId") String schoolId);
 }

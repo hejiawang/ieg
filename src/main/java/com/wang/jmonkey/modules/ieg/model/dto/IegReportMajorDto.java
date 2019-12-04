@@ -27,6 +27,11 @@ public class IegReportMajorDto extends IegSchoolMajor {
     private String facultyName;
 
     /**
+     * 专业所属学科id
+     */
+    private String majorTwoName;
+
+    /**
      * 问题汇总
      */
     private List<IegSchoolMajorProblem> problemList;
