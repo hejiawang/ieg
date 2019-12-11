@@ -1,8 +1,11 @@
 package com.wang.jmonkey.modules.ieg.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.wang.jmonkey.modules.ieg.model.dto.IegEnrollDto;
 import com.wang.jmonkey.modules.ieg.model.entity.IegEnroll;
 import com.baomidou.mybatisplus.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -28,4 +31,11 @@ public interface IIegEnrollService extends IService<IegEnroll> {
      * @return Boolean
      */
     Boolean checkExist(IegEnroll entity);
+
+    /**
+     * 根据院校名称，获取院校投档分数信息
+     * @param schoolName 院校名称
+     * @return 院校投档分数信息
+     */
+    List<IegEnrollDto> selectDtoBySchoolName(String schoolName);
 }

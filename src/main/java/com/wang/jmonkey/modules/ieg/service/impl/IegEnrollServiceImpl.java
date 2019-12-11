@@ -2,11 +2,15 @@ package com.wang.jmonkey.modules.ieg.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.wang.jmonkey.modules.ieg.model.dto.IegEnrollDto;
 import com.wang.jmonkey.modules.ieg.model.entity.IegEnroll;
 import com.wang.jmonkey.modules.ieg.mapper.IegEnrollMapper;
 import com.wang.jmonkey.modules.ieg.service.IIegEnrollService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -18,6 +22,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class IegEnrollServiceImpl extends ServiceImpl<IegEnrollMapper, IegEnroll> implements IIegEnrollService {
+
+    /**
+     * mapper
+     */
+    @Autowired
+    private IegEnrollMapper mapper;
 
     /**
      * 分页查询信息
@@ -52,5 +62,15 @@ public class IegEnrollServiceImpl extends ServiceImpl<IegEnrollMapper, IegEnroll
         );
 
         return super.selectOne(wrapper) != null;
+    }
+
+    /**
+     * 根据院校名称，获取院校投档分数信息
+     * @param schoolName 院校名称
+     * @return 院校投档分数信息
+     */
+    @Override
+    public List<IegEnrollDto> selectDtoBySchoolName(String schoolName) {
+        return mapper.selectDtoBySchoolName(schoolName);
     }
 }

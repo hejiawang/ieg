@@ -1,6 +1,7 @@
 package com.wang.jmonkey.modules.ieg.model.dto;
 
 import com.wang.jmonkey.modules.ieg.model.entity.IegSchoolMajor;
+import com.wang.jmonkey.modules.ieg.model.entity.IegSchoolMajorEnrollRecord;
 import com.wang.jmonkey.modules.ieg.model.entity.IegSchoolMajorProblem;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -35,4 +36,9 @@ public class IegReportMajorDto extends IegSchoolMajor {
      * 问题汇总
      */
     private List<IegSchoolMajorProblem> problemList;
+
+    /**
+     * 专业历年录取信息
+     */
+    private List<IegSchoolMajorEnrollRecord> enrollList;
 }

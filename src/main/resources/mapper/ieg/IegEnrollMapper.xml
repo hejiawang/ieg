@@ -17,4 +17,20 @@
         <result column="delete_flag" property="deleteFlag" />
     </resultMap>
 
+    <resultMap id="DtoResultMap" type="com.wang.jmonkey.modules.ieg.model.dto.IegEnrollDto" extends="BaseResultMap">
+        <result column="number" property="number" />
+        <result column="score_min" property="scoreMin" />
+        <result column="score_max" property="scoreMax" />
+    </resultMap>
+
+    <select id="selectDtoBySchoolName" resultMap="DtoResultMap">
+        select e.*, ei.number as number, ei.score_min as score_min, ei.score_max as score_max
+        from ieg_enroll e
+        left join ieg_enroll_info ei on e.id = ei.enroll_id
+        where ei.school_name = #{schoolName}
+        and e.delete_flag = 'Used'
+        and ei.delete_flag = 'Used'
+        order by e.year
+    </select>
+
 </mapper>

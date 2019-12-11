@@ -53,4 +53,9 @@ public class IegReportDetailDto {
      */
     private List<IegReportMajorDto> majorList;
 
+    /**
+     * 投档分数信息
+     */
+    private List<IegEnrollDto> enrollList;
+
 }

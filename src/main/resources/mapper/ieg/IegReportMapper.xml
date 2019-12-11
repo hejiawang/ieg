@@ -57,6 +57,14 @@
             <result column="problem_answer" property="answer" />
             <result column="problem_problem" property="problem" />
         </collection>
+
+        <collection property="enrollList" ofType="com.wang.jmonkey.modules.ieg.model.entity.IegSchoolMajorEnrollRecord">
+            <result column="enroll_year" property="year" />
+            <result column="enroll_type" property="type" />
+            <result column="enroll_score_min" property="scoreMin" />
+            <result column="enroll_plan_number" property="planNumber" />
+            <result column="enroll_real_number" property="realNumber" />
+        </collection>
     </resultMap>
 
     <select id="list" resultMap="BaseResultMap">
@@ -157,14 +165,18 @@
             sm.*,
             m.name as majorTwoName, sf.name as facultyName,
             smfd.lable as feature_name,
-            smp.answer as problem_answer, smp.problem as problem_problem
+            smp.answer as problem_answer, smp.problem as problem_problem,
+            mer.year as enroll_year, mer.type as enroll_type, mer.score_min as enroll_score_min,
+            mer.plan_number as enroll_plan_number, mer.real_number as enroll_real_number
         FROM ieg_school_major sm
         LEFT JOIN ieg_major m ON sm.major_two_id = m.id
         LEFT JOIN ieg_school_faculty sf ON sm.faculty_id = sf.id
         LEFT JOIN ieg_school_major_features smf ON sm.id = smf.school_major_id
         LEFT JOIN sys_dict smfd ON smf.type = smfd.value
         LEFT JOIN ieg_school_major_problem smp ON smp.school_major_id = sm.id
+        left join ieg_school_major_enroll_record mer on mer.school_major_id = sm.id and mer.delete_flag = 'Used' and mer.state = 'Yes'
         WHERE sm.school_id = #{schoolId}
+        order by sm.id, mer.year
     </select>
 
 </mapper>

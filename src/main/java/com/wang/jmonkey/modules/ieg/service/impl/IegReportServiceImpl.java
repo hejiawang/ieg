@@ -68,6 +68,12 @@ public class IegReportServiceImpl implements IIegReportService {
     private IIegSchoolFacultyService iegSchoolFacultyService;
 
     /**
+     * iegEnrollService
+     */
+    @Autowired
+    private IIegEnrollService iegEnrollService;
+
+    /**
      * 检索页面 list数据
      * @param param param
      * @return IegReportListDto
@@ -126,6 +132,8 @@ public class IegReportServiceImpl implements IIegReportService {
                 iegSchoolFacultyService.selectBySchoolId(schoolId)
         ).setMajorList(
                 mapper.selectMajorBySchoolId(schoolId)
+        ).setEnrollList(
+                iegEnrollService.selectDtoBySchoolName(school.getName())
         );
 
         return result;
