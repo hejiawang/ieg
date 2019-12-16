@@ -28,8 +28,8 @@ public class IegSchoolLogApi extends BaseHttp {
      * @param param param
      * @return IegSchoolLog
      */
-    @GetMapping(value = "/list")
-    public HttpPageResult<IegSchoolLog> list(IegSchoolLogParam param) {
+    @PostMapping(value = "/list")
+    public HttpPageResult<IegSchoolLog> list(@RequestBody IegSchoolLogParam param) {
         return new HttpPageResult<>( service.selectPageList( param ) );
     }
 
