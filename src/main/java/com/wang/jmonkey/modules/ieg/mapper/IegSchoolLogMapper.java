@@ -2,6 +2,9 @@ package com.wang.jmonkey.modules.ieg.mapper;
 
 import com.wang.jmonkey.modules.ieg.model.entity.IegSchoolLog;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.wang.jmonkey.modules.ieg.model.param.IegSchoolLogParam;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface IegSchoolLogMapper extends BaseMapper<IegSchoolLog> {
 
+    List<IegSchoolLog> listPage(IegSchoolLogParam param);
+
+    long listTotal(IegSchoolLogParam param);
 }

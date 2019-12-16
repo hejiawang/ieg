@@ -17,4 +17,32 @@
         <result column="delete_flag" property="deleteFlag" />
     </resultMap>
 
+    <select id="listPage" resultMap="BaseResultMap">
+        select *
+        from ieg_school_log
+        where date_format(create_date, '%Y-%m-%d') >= date_format(#{startDate}, '%Y-%m-%d')
+        and date_format(create_date, '%Y-%m-%d') &lt;= date_format(#{endDate}, '%Y-%m-%d')
+        <if test=" userName != '' and userName != null">
+            AND userName like '%${userName}%'
+        </if>
+        <if test=" schoolName != '' and schoolName != null">
+            AND schoolName like '%${schoolName}%'
+        </if>
+        order by create_date desc
+        LIMIT ${limitStart}, ${size}
+    </select>
+
+    <select id="listTotal" resultType="java.lang.Long">
+        select count(1)
+        from ieg_school_log
+        where date_format(create_date, '%Y-%m-%d') >= date_format(#{startDate}, '%Y-%m-%d')
+        and date_format(create_date, '%Y-%m-%d') &lt;= date_format(#{endDate}, '%Y-%m-%d')
+        <if test=" userName != '' and userName != null">
+            AND userName like '%${userName}%'
+        </if>
+        <if test=" schoolName != '' and schoolName != null">
+            AND schoolName like '%${schoolName}%'
+        </if>
+    </select>
+
 </mapper>
