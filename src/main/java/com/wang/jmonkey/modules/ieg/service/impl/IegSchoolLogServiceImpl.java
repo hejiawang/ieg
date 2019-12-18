@@ -1,6 +1,7 @@
 package com.wang.jmonkey.modules.ieg.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolLogChartDto;
 import com.wang.jmonkey.modules.ieg.model.entity.IegSchoolLog;
 import com.wang.jmonkey.modules.ieg.mapper.IegSchoolLogMapper;
 import com.wang.jmonkey.modules.ieg.model.param.IegSchoolLogParam;
@@ -8,6 +9,8 @@ import com.wang.jmonkey.modules.ieg.service.IIegSchoolLogService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -41,5 +44,15 @@ public class IegSchoolLogServiceImpl extends ServiceImpl<IegSchoolLogMapper, Ieg
                 .setSize(param.getSize());
 
         return pageResult;
+    }
+
+    /**
+     * count
+     * @param param param
+     * @return IegSchoolLogChartDto
+     */
+    @Override
+    public List<IegSchoolLogChartDto> count(IegSchoolLogParam param) {
+        return mapper.count(param);
     }
 }

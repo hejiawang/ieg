@@ -23,10 +23,10 @@
         where date_format(create_date, '%Y-%m-%d') >= date_format(#{startDate}, '%Y-%m-%d')
         and date_format(create_date, '%Y-%m-%d') &lt;= date_format(#{endDate}, '%Y-%m-%d')
         <if test=" userName != '' and userName != null">
-            AND userName like '%${userName}%'
+            AND user_name like '%${userName}%'
         </if>
         <if test=" schoolName != '' and schoolName != null">
-            AND schoolName like '%${schoolName}%'
+            AND school_name like '%${schoolName}%'
         </if>
         order by create_date desc
         LIMIT ${limitStart}, ${size}
@@ -38,11 +38,27 @@
         where date_format(create_date, '%Y-%m-%d') >= date_format(#{startDate}, '%Y-%m-%d')
         and date_format(create_date, '%Y-%m-%d') &lt;= date_format(#{endDate}, '%Y-%m-%d')
         <if test=" userName != '' and userName != null">
-            AND userName like '%${userName}%'
+            AND user_name like '%${userName}%'
         </if>
         <if test=" schoolName != '' and schoolName != null">
-            AND schoolName like '%${schoolName}%'
+            AND school_name like '%${schoolName}%'
         </if>
+    </select>
+
+    <select id="count" resultType="com.wang.jmonkey.modules.ieg.model.dto.IegSchoolLogChartDto">
+        select
+            su.real_name as name,
+            (
+                select count(1)
+                from ieg_school_log
+                where user_name = su.real_name
+                and date_format(create_date, '%Y-%m-%d') >= date_format(#{startDate}, '%Y-%m-%d')
+                and date_format(create_date, '%Y-%m-%d') &lt;= date_format(#{endDate}, '%Y-%m-%d')
+            ) as value
+        from sys_user su
+        left join sys_user_role sur on sur.user_id = su.id
+        left join sys_role sr on sr.id = sur.role_id
+        where sr.code = 'ieg_common' and su.delete_flag = 'Used'
     </select>
 
 </mapper>

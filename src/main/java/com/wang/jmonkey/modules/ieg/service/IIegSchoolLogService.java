@@ -1,9 +1,12 @@
 package com.wang.jmonkey.modules.ieg.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.wang.jmonkey.modules.ieg.model.dto.IegSchoolLogChartDto;
 import com.wang.jmonkey.modules.ieg.model.entity.IegSchoolLog;
 import com.baomidou.mybatisplus.service.IService;
 import com.wang.jmonkey.modules.ieg.model.param.IegSchoolLogParam;
+
+import java.util.List;
 
 /**
  * <p>
@@ -21,4 +24,11 @@ public interface IIegSchoolLogService extends IService<IegSchoolLog> {
      * @return IegSchoolLog
      */
     Page<IegSchoolLog> selectPageList(IegSchoolLogParam param);
+
+    /**
+     * count
+     * @param param param
+     * @return IegSchoolLogChartDto
+     */
+    List<IegSchoolLogChartDto> count(IegSchoolLogParam param);
 }
