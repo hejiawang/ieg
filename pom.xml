@@ -31,7 +31,7 @@
         <hutool.version>3.3.2</hutool.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <velocity-engine-core.version>2.0</velocity-engine-core.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <ttl.version>2.2.0</ttl.version>
         <quartz.version>2.2.3</quartz.version>
         <poi.version>3.17</poi.version>
