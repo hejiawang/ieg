@@ -34,7 +34,7 @@
         <commons-io.version>2.6</commons-io.version>
         <ttl.version>2.2.0</ttl.version>
         <quartz.version>2.2.3</quartz.version>
-        <poi.version>3.17</poi.version>
+        <poi.version>4.1.1</poi.version>
         <activiti.spring.boot.version>6.0.0</activiti.spring.boot.version>
         <kaptcha.version>0.0.9</kaptcha.version>
 
